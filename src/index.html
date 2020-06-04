@@ -6,42 +6,48 @@
   </head>
   <body>
 		<header>
-			<h1 class='main-title'>Travel Tracker</h1>
-			<!-- add icon/logo here-->
+			<h1 class='main-title'>Travel Tracker
+				<img src="images/map.png" alt="map icon" class="icon header-map-icon" role="logo"/>
+			</h1>
 			<form id="search" class="search">
 				<input  name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search clients..." role="searchbox">
-				<button role="button" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button"><img src="images/search.png" alt="search button"></button>
+				<button role="button" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button">
+					<img src="images/search.png" class='icon' alt="search button">
+				</button>
 			</form>
 			<button class='book-trip' type='button' name='book trip button'>Book Trip</button>
-			<!--make ^^ btn an img-->
 		</header>
 
-		<section class='login'>
-			<form id='login'>
-				<div class='login-container'>
-					<label for="username">Username</label>
-					<input type='text' placeholder='Enter Username' name='username' required>
-					</br>
-					<label for='psw'>Password</label>
-					<input type='password' placeholder='Enter Password' name='psw' required>
+	<main>
+		<form class='login'>
+			<div class='login-container'>
+				<div class='form-input'>
+					<label for="username">Username:</label>
+					<input type='text' class='input username-input' placeholder='Enter Username' name='username' required>
 				</div>
+				<div class='form-input'>
+					<label for='psw'>Password:</label>
+					<input type='password' class='input pwd-input' placeholder='Enter Password' name='psw' required>
+				</div>
+			</div>
 
-				<button type="submit">Login</button>
-			</form>
-		</section>
+			<button type="submit" class='login-btn'>Login</button>
+		</form>
 
 		<section class='traveler-dash hide'>
-			<div class='trips past-trips hide'>Past Trips</div>
-			<div class='trips current-trips hide'>Current Trips</div>
-			<div class='trips upcoming-trips hide'>Upcoming Trips</div>
-			<div class='trips pending-trips hide'>Pending Trips</div>
+			<div class='welcome-banner'>Welcome user!</div>
+			<div class='trips past-trips'>Past Trips</div>
+			<div class='trips current-trips'>Current Trips</div>
+			<div class='trips upcoming-trips'>Upcoming Trips</div>
+			<div class='trips pending-trips'>Pending Trips</div>
 		</section>
 
 		<section class='agent-dash hide'>
-			<div class='trip-requests'>Trip Requests</div>
 			<div class='income-gained'>Revenue</div>
+			<div class='trip-requests'>Trip Requests</div>
 			<div class='current-travelers'>Today's Travelers</div>
 		</section>
+	</main>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
 </html>

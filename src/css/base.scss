@@ -1,52 +1,119 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+$primary-color: #E67E22;
+$accent-yellow: #DAF7A6;
+$accent-blue: #7FB3D5;
 ;
 
 body {
-  background: white;
+	background: white;
+	font-family: "Quicksand", sans-serif;
+	color: white;
+
 }
 
 header {
 	display: flex;
 	justify-content: space-between;
-	background-color: orange;
+	align-items: center;
+	background-color: $primary-color;
 	font-family: "Quicksand", sans-serif;
 	color: white;
+	padding: 10px;
 }
 
-h1 {
-	margin-left: 10px
+main {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
 }
 
 button {
 	font-family: "Quicksand", sans-serif;
-	height: 40px;
+	height: 30px;
 	width: 80px;
+	border-radius: 7px;
+	border: 1px solid $accent-yellow;
+	color: white;
+	font-weight: bold;
+	font-size: 17x;
+	background-color: $primary-color;
+	font-family: "Quicksand", sans-serif;
+	&:hover {
+		color: black;
+		background-color: $accent-yellow;
+	}
+}
+
+h1 {
+	display: flex;
+  align-items: flex-end;
+}
+
+.header-map-icon {
+	height: 5vh;
+	margin-left: 5px;
+}
+
+.nav-btn {
+	margin-left: 10px;
+}
+
+button img {
+	height: 3vh;
+
 }
 
 .hide {
-	display: none;
-}
-
-#login {
-	border: 1px solid black;
-	height: 40vh;
-	width: 60vw;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
+	display: none!important;
 }
 
 .login {
-	margin-top: 15%;
+	border: 2px solid $accent-yellow;
+	background-color: $accent-blue;
+	border-radius: 9px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 70%;
+	height: 400px;
+	margin-top: 80px;
+}
+
+.login-container {
+	padding: 30px;
+	width: 100%;
+	display: grid;
+	grid-gap: 10px;
+	justify-content: center;
+}
+
+.form-input {
+	display: grid;
+	grid-template-columns: 1fr 4fr;
+	align-items: center;
+	grid-gap: 15px;
+}
+
+.login-btn {
+	margin: 2% 45% 2% 45%;
 }
 
 input {
 	height: 30px;
+	padding: 0;
+	border: 1px grey solid;
+	padding-left: 5px;
 }
 
 .search {
 	display: flex;
+	border: 2px outset $accent-yellow;
+	border-radius: 8px 8px 8px 8px;
+}
+
+#search-input {
+	width: 250px;
 }
 
 .traveler-dash {
