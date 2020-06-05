@@ -1,7 +1,7 @@
-import './css/base.scss';
 import './images/search.png';
 import './images/map.png';
 import './images/bahamas.jpg';
+import './css/base.scss';
 
 import Traveler from './traveler';
 import Agent from './agent';

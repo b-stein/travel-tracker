@@ -10,7 +10,7 @@
 				<img src="images/map.png" alt="map icon" class="icon header-map-icon" role="logo"/>
 			</h1>
 			<form id="search" class="search">
-				<input  name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search clients..." role="searchbox">
+				<input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search clients..." role="searchbox">
 				<button role="button" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button">
 					<img src="images/search.png" class='icon' alt="search button">
 				</button>
@@ -19,7 +19,8 @@
 		</header>
 
 	<main>
-		<form class='login hide'>
+		<section class='login-wrapper'>
+		<form class='login'>
 			<div class='login-container'>
 				<div class='form-input'>
 					<label for="username">Username:</label>
@@ -33,6 +34,8 @@
 
 			<button type="submit" class='login-btn'>Login</button>
 		</form>
+		<img src='images/bahamas.jpg' alt='airplane in bahamas' class='background-img' role='background image'/>
+	</section>
 
 		<section class='traveler-dash hide'>
 			<h1 class='welcome-banner'>Welcome user!</h1>
@@ -50,7 +53,7 @@
 			</div>
 		</section>
 
-		<section class='agent-dash'>
+		<section class='agent-dash hide'>
 			<div class='modal income-gained'>Revenue
 				<div class='revenue'></div>
 			</div>
