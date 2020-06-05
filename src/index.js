@@ -1,6 +1,7 @@
 import './css/base.scss';
 import './images/search.png';
 import './images/map.png';
+import './images/bahamas.jpg';
 
 import Traveler from './traveler';
 import Agent from './agent';
@@ -61,13 +62,13 @@ function loginHandler(loginUser, loginPwd) {
   login.authenticate();
 	
   if (login.authenticated === true && login.agency === true) {
-    agent = new Agent(loginUser, loginPwd);
+		agent = new Agent(loginUser, loginPwd);
     domUpdates.displayAgentDash();
     console.log(agent);
   } else if (login.authenticated === true && login.agency === false) {
     const usernameID = loginUser.slice(-2);
     user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd);
-    domUpdates.displayUserDash();
+		domUpdates.displayUserDash();
     console.log(user);
   }
 }

@@ -1,9 +1,9 @@
 class User {
-	constructor(username, pwd) {
+	constructor(username, pwd, isAuthenticated = false, isAgency = false) {
 		this.username = username;
 		this.pwd = pwd;
-		this.authenticated = false;
-		this.agency = false;
+		this.authenticated = isAuthenticated;
+		this.agency = isAgency;
 	}
 
 	authenticate() {

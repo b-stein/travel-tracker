@@ -2,7 +2,7 @@ import User from './user';
 
 class Agent extends User {
 	constructor(username, pwd) {
-		super(username, pwd);
+		super(username, pwd, true, true);
 		this.id = 1;
 	}
 

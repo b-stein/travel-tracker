@@ -19,7 +19,7 @@
 		</header>
 
 	<main>
-		<form class='login'>
+		<form class='login hide'>
 			<div class='login-container'>
 				<div class='form-input'>
 					<label for="username">Username:</label>
@@ -35,17 +35,35 @@
 		</form>
 
 		<section class='traveler-dash hide'>
-			<div class='welcome-banner'>Welcome user!</div>
-			<div class='trips past-trips'>Past Trips</div>
-			<div class='trips current-trips'>Current Trips</div>
-			<div class='trips upcoming-trips'>Upcoming Trips</div>
-			<div class='trips pending-trips'>Pending Trips</div>
+			<h1 class='welcome-banner'>Welcome user!</h1>
+			<div class='modal trips current-trips'>Current Trips
+				<div class='current-trips-container'></div>
+			</div>
+			<div class='modal trips upcoming-trips'>Upcoming Trips
+				<div class='upcoming-trips-container'></div>
+			</div>
+			<div class='modal trips past-trips'>Past Trips
+				<div class='past-trips-container'></div>
+			</div>
+			<div class='modal trips pending-trips'>Pending Trips
+				<div class='pending-trips-container'></div>
+			</div>
 		</section>
 
-		<section class='agent-dash hide'>
-			<div class='income-gained'>Revenue</div>
-			<div class='trip-requests'>Trip Requests</div>
-			<div class='current-travelers'>Today's Travelers</div>
+		<section class='agent-dash'>
+			<div class='modal income-gained'>Revenue
+				<div class='revenue'></div>
+			</div>
+			<div class='modal trip-requests'>Trip Requests
+				<div class='request-container'>
+
+				</div>
+			</div>
+			<div class='modal current-travelers'>Active Trips Today
+				<div class='active-trips-container'>
+
+				</div>
+			</div>
 		</section>
 	</main>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->

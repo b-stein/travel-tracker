@@ -114,18 +114,39 @@ input {
 
 #search-input {
 	width: 250px;
+	border-radius: 7px;
 }
 
 .traveler-dash {
-	display: flex;
-	justify-content: space-evenly;
-	margin-top: 10%;
+	display: grid;
+	width: 100vw;
+  grid-template-rows: 1fr 3fr 3fr 3fr 3fr;
+	.welcome-banner {
+		display: flex;
+		justify-content: center;
+		color: $accent-blue;
+	}
 }
 
-.trips {
-	border: 1px solid green;
-	height: 70vh;
-	width: 22vw;
-	border-radius: 10px;
-	text-align: center;
+.agent-dash {
+	display: grid;
+	grid-template-rows: 1fr 2fr 2fr;
+	width: 100vw;
+	height: 80vh;
+	margin-top: 2%;
+}
+
+.modal {
+	border: 2px solid $accent-yellow;
+	background-color: $accent-blue;
+	font-weight: bold;
+	border-radius: 9px;
+	display: grid;
+	margin: 5px;
+	padding: 15px;
+}
+
+.income-gained {
+	height: 15vh;
+	max-width: 30%;
 }
