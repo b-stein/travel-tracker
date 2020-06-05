@@ -1,13 +1,74 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <title>Webpack Starter Kit</title>
+		<title>Travel Tracker</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.scss">
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
+		<header>
+			<h1 class='main-title'>Travel Tracker
+				<img src="images/map.png" alt="map icon" class="icon header-map-icon" role="logo"/>
+			</h1>
+			<form id="search" class="search">
+				<input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search clients..." role="searchbox">
+				<button role="button" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button">
+					<img src="images/search.png" class='icon' alt="search button">
+				</button>
+			</form>
+			<button class='book-trip' type='button' name='book trip button'>Book Trip</button>
+		</header>
 
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+	<main>
+		<section class='login-wrapper'>
+		<form class='login'>
+			<div class='login-container'>
+				<div class='form-input'>
+					<label for="username">Username:</label>
+					<input type='text' class='input username-input' placeholder='Enter Username' name='username' required>
+				</div>
+				<div class='form-input'>
+					<label for='psw'>Password:</label>
+					<input type='password' class='input pwd-input' placeholder='Enter Password' name='psw' required>
+				</div>
+			</div>
 
+			<button type="submit" class='login-btn'>Login</button>
+		</form>
+		<img src='images/bahamas.jpg' alt='airplane in bahamas' class='background-img' role='background image'/>
+	</section>
+
+		<section class='traveler-dash hide'>
+			<h1 class='welcome-banner'>Welcome user!</h1>
+			<div class='modal trips current-trips'>Current Trips
+				<div class='current-trips-container'></div>
+			</div>
+			<div class='modal trips upcoming-trips'>Upcoming Trips
+				<div class='upcoming-trips-container'></div>
+			</div>
+			<div class='modal trips past-trips'>Past Trips
+				<div class='past-trips-container'></div>
+			</div>
+			<div class='modal trips pending-trips'>Pending Trips
+				<div class='pending-trips-container'></div>
+			</div>
+		</section>
+
+		<section class='agent-dash hide'>
+			<div class='modal income-gained'>Revenue
+				<div class='revenue'></div>
+			</div>
+			<div class='modal trip-requests'>Trip Requests
+				<div class='request-container'>
+
+				</div>
+			</div>
+			<div class='modal current-travelers'>Active Trips Today
+				<div class='active-trips-container'>
+
+				</div>
+			</div>
+		</section>
+	</main>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
 </html>
