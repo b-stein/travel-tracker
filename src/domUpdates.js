@@ -24,6 +24,7 @@ let domUpdates = {
 		let upcomingTripsHTML = document.querySelector('.upcoming-trips-container');
 		let pastTripsHTML = document.querySelector('.past-trips-container');
 		let pendingTripsHTML = document.querySelector('.pending-trips-container');
+		this.generateTripCards(currentTripsHTML, user.activeTrips);
 		this.generateTripCards(upcomingTripsHTML, user.upcomingTrips, destinations);
 		this.generateTripCards(pastTripsHTML, user.pastTrips, destinations);
 		this.generateTripCards(pendingTripsHTML, user.pendingTrips, destinations);

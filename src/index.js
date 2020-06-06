@@ -22,7 +22,8 @@ window.addEventListener('load', fetchDate);
 document.querySelector('.login-btn').addEventListener('click', (e) => fetchLoginUser(e));
 
 function fetchDate() {
-  const currentDate = new Date();
+	const currentDate = new Date();
+	console.log(currentDate);
   const dd = String(currentDate.getDate()).padStart(2, '0');
   const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
   const yyyy = currentDate.getFullYear();
@@ -62,11 +63,16 @@ function loginHandler(loginUser, loginPwd) {
   login.authenticate();
 	
   if (login.authenticated === true && login.agency === true) {
-		agent = new Agent(loginUser, loginPwd);
+		agent = new Agent(loginUser, loginPwd, trips);
     domUpdates.displayAgentDash();
     console.log(agent);
   } else if (login.authenticated === true && login.agency === false) {
-    const usernameID = loginUser.slice(-2);
+		let usernameID;
+		if (typeof loginUser !== 'number') {
+			usernameID = '0' + loginUser.slice(-1);
+		} else {
+			usernameID = loginUser.slice(-2);
+		}
     user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd, trips);
 		user.findActiveTrips(today);
 		user.findUpcomingTrips(today);

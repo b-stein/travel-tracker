@@ -87,7 +87,25 @@ describe('Traveler', () => {
 		expect(user).to.be.an.instanceof(User);
 	})
 
-	//property tests
+	it('should have the users id property', () => {
+		expect(user.id).to.equal(19);
+	})
+
+	it('should have the users name property', () => {
+		expect(user.name).to.equal('Felicdad Rishbrook');
+	})
+
+	it('should have the users travelerType property', () => {
+		expect(user.travelerType).to.equal('thrill-seeker');
+	})
+
+	it('should hold all trips matching the users id', () => {
+		expect(user.trips).to.deep.equal([trips[0], trips[1], trips[2], trips[3], trips[5]]);
+	})
+
+	it('if instantiated while missing an argument, an error should throw', () => {
+		expect(() => {new Traveler(trips, 'traveler19', 'travel2020')}).to.throw(Error);
+	})
 
 	it('should be able to find all trips active for a given day', () => {
 		user.findActiveTrips(today);
@@ -100,10 +118,22 @@ describe('Traveler', () => {
     }]);
 	})
 
+	it('if findActiveTrips method is invoked without an argument, it will return nothing', () => {
+		user.findActiveTrips();
+
+		expect(user.activeTrips).to.deep.equal([]);
+	})
+
 	it('should be able to find all upcoming trips based on todays date', () => {
 		user.findUpcomingTrips('2020/08/08');
 
 		expect(user.upcomingTrips).to.deep.equal([trips[0]]);
+	})
+
+	it('if findUpcomingTrips method is invoked without an argument, it will return nothing', () => {
+		user.findUpcomingTrips();
+
+		expect(user.upcomingTrips).to.deep.equal([]);
 	})
 
 	it('should be able to find all past trips based on todays date', () => {
@@ -112,13 +142,29 @@ describe('Traveler', () => {
 		expect(user.pastTrips).to.deep.equal([trips[1], trips[2], trips[3]]);
 	})
 
+	it('if findPastTrips method is invoked without an argument, it will return nothing', () => {
+		user.findPastTrips();
+
+		expect(user.pastTrips).to.deep.equal([]);
+	})
+
 	it('should be able to find all trips pending approval', () => {
 		user.findPendingTrips();
 
 		expect(user.pendingTrips).to.deep.equal([trips[5]]);
 	})
 
+	it('if findPendingTrips method is invoked with an argument, the method will still run properly', () => {
+		user.findPendingTrips(today);
+
+		expect(user.pendingTrips).to.deep.equal([trips[5]]);
+	})
+
 	it('should be able to find the years trip expenses based off the date', () => {
 		expect(user.findYearTripCost('2020/09/24', destinations)).to.equal('$22660');
+	})
+
+	it('if findYearTripCost method is invoked while missing an argument, an error should throw', () => {
+		expect(() => {user.findYearTripCost('2020/09/24')}).to.throw(Error);
 	})
 })
