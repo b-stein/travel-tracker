@@ -144,10 +144,11 @@ input {
 	display: grid;
 	width: 100vw;
   grid-template-rows: 1fr 3fr 3fr 3fr 3fr;
-	.welcome-banner {
+	.welcome-banner, .yr-trip-cost {
 		display: flex;
 		justify-content: center;
 		color: $accent-blue;
+		margin-bottom: 0;
 	}
 }
 

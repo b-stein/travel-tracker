@@ -14,10 +14,12 @@ class Traveler extends User {
 	}
 
 	findActiveTrips(today) {
-		this.activeTrips = this.trips.filter(trip => {
+		const activeTrips = this.trips.filter(trip => {
 			const endDate = this.addDays(trip.date, trip.duration);
 			if (endDate > today && trip.date <= today) return trip
 		})
+
+		this.activeTrips = activeTrips.filter(trip => trip.status === 'approved');
 	}
 
 	addDays(date, days) {
@@ -36,7 +38,7 @@ class Traveler extends User {
 	}
 
 	findPastTrips(today) {
-		this.pastTrips = this.trips.filter(trip => trip.date < today);
+		this.pastTrips = this.trips.filter(trip => trip.date < today).filter(trip => trip.status === 'approved');
 	}
 
 	findPendingTrips() {

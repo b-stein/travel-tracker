@@ -32,14 +32,18 @@ class Agent extends User {
 			return sum / 10;
 		}, 0);
 
-		return `$${revenueGained}`;
+		const roundedNum = Math.floor(revenueGained * 100) / 100;
+
+		return `$${roundedNum}`;
 	}
 
 	findActiveTrips(today) {
-		this.activeTrips = this.userTrips.filter(trip => {
+		const activeTrips = this.userTrips.filter(trip => {
 			const endDate = this.addDays(trip.date, trip.duration);
 			if (endDate > today && trip.date <= today) return trip
 		})
+
+		this.activeTrips = activeTrips.filter(trip => trip.status === 'approved');
 	}
 
 	addDays(date, days) {
