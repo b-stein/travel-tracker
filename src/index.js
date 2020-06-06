@@ -22,12 +22,12 @@ window.addEventListener('load', fetchDate);
 document.querySelector('.login-btn').addEventListener('click', (e) => fetchLoginUser(e));
 
 function fetchDate() {
-  const currentDate = new Date();
+	const currentDate = new Date();
   const dd = String(currentDate.getDate()).padStart(2, '0');
   const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
   const yyyy = currentDate.getFullYear();
-  today = yyyy + '/' + mm + '/' + dd;
-  console.log(today);
+	today = yyyy + '/' + mm + '/' + dd;
+	document.querySelector('.today').innerText = `today: ${today}`;
 }
 
 function fetchLoginUser(event) {
@@ -54,7 +54,7 @@ function fetchLoginUser(event) {
       destinations = response[2].destinations;
     })
     .then(() => loginHandler(loginUser, loginPwd))
-    .catch(error => console.log(error))
+    .catch(domUpdates.displayErrorLoginMsg())
 }
 
 function loginHandler(loginUser, loginPwd) {
@@ -62,13 +62,26 @@ function loginHandler(loginUser, loginPwd) {
   login.authenticate();
 	
   if (login.authenticated === true && login.agency === true) {
-		agent = new Agent(loginUser, loginPwd);
-    domUpdates.displayAgentDash();
+		agent = new Agent(loginUser, loginPwd, trips);
+		agent.findPendingTrips();
+		agent.findActiveTrips(today);
+    domUpdates.displayAgentDash(agent, destinations, today);
     console.log(agent);
   } else if (login.authenticated === true && login.agency === false) {
-    const usernameID = loginUser.slice(-2);
-    user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd);
-		domUpdates.displayUserDash();
+		let usernameID;
+		if (isNaN(Number(loginUser.slice(-2)))) {
+			usernameID = '0' + loginUser.slice(-1);
+		} else {
+			usernameID = loginUser.slice(-2);
+		}
+    user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd, trips);
+		user.findActiveTrips(today);
+		user.findUpcomingTrips(today);
+		user.findPastTrips(today);
+		user.findPendingTrips();
+		domUpdates.displayUserDash(user, destinations, today);
     console.log(user);
-  }
+  } else {
+		domUpdates.displayErrorLoginMsg();
+	}
 }

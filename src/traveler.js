@@ -14,42 +14,31 @@ class Traveler extends User {
 	}
 
 	findActiveTrips(today) {
-		this.activeTrips = this.trips.filter(trip => trip.date === today);
+		const activeTrips = this.trips.filter(trip => {
+			const endDate = this.addDays(trip.date, trip.duration);
+			if (endDate > today && trip.date <= today) return trip
+		})
+
+		this.activeTrips = activeTrips.filter(trip => trip.status === 'approved');
 	}
-//find length of trip too ^^
+
+	addDays(date, days) {
+		const endDate = new Date(date);
+		endDate.setDate(endDate.getDate() + days);
+		const dd = String(endDate.getDate()).padStart(2, '0');
+  	const mm = String(endDate.getMonth() + 1).padStart(2, '0');
+  	const yyyy = endDate.getFullYear();
+		return yyyy + '/' + mm + '/' + dd;
+	}
 
 	findUpcomingTrips(today) {
-		const yyyy = today.substring(0, 4);
-		const mm = today.substring(6, 8);
-		const dd = today.substring(9);
+		const upcomingTrips = this.trips.filter(trip => trip.date > today);
 
-		this.upcomingTrips = this.trips.filter(trip => {
-			let tYYYY = trip.date.substring(0, 4);
-			let tMM = trip.date.substring(6, 8);
-			let tDD = trip.date.substring(9);
-			if (tYYYY > yyyy || 
-				tYYYY === yyyy && tMM > mm || 
-				tYYYY === yyyy && tMM === mm && tDD > dd) {
-				return trip;
-			}
-		})
+		this.upcomingTrips = upcomingTrips.filter(trip => trip.status === 'approved');
 	}
 
 	findPastTrips(today) {
-		const yyyy = today.substring(0, 4);
-		const mm = today.substring(6, 8);
-		const dd = today.substring(9);
-
-		this.pastTrips = this.trips.filter(trip => {
-			let tYYYY = trip.date.substring(0, 4);
-			let tMM = trip.date.substring(6, 8);
-			let tDD = trip.date.substring(9);
-			if (tYYYY < yyyy || 
-				tYYYY === yyyy && tMM < mm || 
-				tYYYY === yyyy && tMM === mm && tDD < dd) {
-				return trip;
-			}
-		})
+		this.pastTrips = this.trips.filter(trip => trip.date < today).filter(trip => trip.status === 'approved');
 	}
 
 	findPendingTrips() {
@@ -64,14 +53,14 @@ class Traveler extends User {
 			if (tYYYY === yyyy) return trip;
 		})
 
-		const totalCost = yearTrips.reduce((acc, trip) => {
+		const totalCost = yearTrips.reduce((sum, trip) => {
 			const foundTripSpec = destinations.find(spot => spot.id === trip.destinationID);
 			let tripCost = (foundTripSpec.estimatedFlightCostPerPerson * trip.travelers) 
 				+ (foundTripSpec.estimatedLodgingCostPerDay * trip.duration);
 			tripCost += (tripCost / 10);
-			acc += tripCost;
+			sum += tripCost;
 
-			return acc;
+			return sum;
 		}, 0);
 
 		return `$${totalCost}`;
