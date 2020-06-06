@@ -14,8 +14,8 @@ describe('domUpdates', () => {
 		expect(domUpdates).to.be.an('object');
 	})
 
-	it('should spy on ___', () => {
-		domUpdates.displayAgentDash();
-		expect(document.querySelector()).to.have.been.called(1);
+	it('should spy on querySelector functions being called on the document', () => {
+		domUpdates.querySelector();
+		expect(document.querySelector).to.have.been.called(1);
 	})
 })

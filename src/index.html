@@ -16,6 +16,7 @@
 					<img src="images/search.png" class='icon' alt="search button">
 				</button>
 			</form>
+			<div class='today'>today: </div>
 			<button class='book-trip' type='button' name='book trip button'>Book Trip</button>
 		</header>
 
@@ -34,6 +35,7 @@
 			</div>
 
 			<button type="submit" class='login-btn'>Login</button>
+			<p class='login-error'></p>
 		</form>
 		<img src='images/bahamas.jpg' alt='airplane in bahamas' class='background-img' role='background image'/>
 	</section>
@@ -41,16 +43,16 @@
 		<section class='traveler-dash hide'>
 			<h1 class='welcome-banner'>Welcome user!</h1>
 			<div class='modal trips current-trips'>Current Trips
-				<div class='current-trips-container'></div>
+				<section class='current-trips-container trip-container'></section>
 			</div>
 			<div class='modal trips upcoming-trips'>Upcoming Trips
-				<div class='upcoming-trips-container'></div>
+				<section class='upcoming-trips-container trip-container'></section>
 			</div>
 			<div class='modal trips past-trips'>Past Trips
-				<div class='past-trips-container'></div>
+				<section class='past-trips-container trip-container'></section>
 			</div>
 			<div class='modal trips pending-trips'>Pending Trips
-				<div class='pending-trips-container'></div>
+				<section class='pending-trips-container trip-container'></section>
 			</div>
 		</section>
 

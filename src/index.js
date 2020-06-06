@@ -26,8 +26,8 @@ function fetchDate() {
   const dd = String(currentDate.getDate()).padStart(2, '0');
   const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
   const yyyy = currentDate.getFullYear();
-  today = yyyy + '/' + mm + '/' + dd;
-  console.log(today);
+	today = yyyy + '/' + mm + '/' + dd;
+	document.querySelector('.today').innerText = `today: ${today}`;
 }
 
 function fetchLoginUser(event) {
@@ -54,7 +54,7 @@ function fetchLoginUser(event) {
       destinations = response[2].destinations;
     })
     .then(() => loginHandler(loginUser, loginPwd))
-    .catch(error => console.log(error))
+    .catch(domUpdates.displayErrorLoginMsg())
 }
 
 function loginHandler(loginUser, loginPwd) {
@@ -67,8 +67,14 @@ function loginHandler(loginUser, loginPwd) {
     console.log(agent);
   } else if (login.authenticated === true && login.agency === false) {
     const usernameID = loginUser.slice(-2);
-    user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd);
-		domUpdates.displayUserDash();
+    user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd, trips);
+		user.findActiveTrips(today);
+		user.findUpcomingTrips(today);
+		user.findPastTrips(today);
+		user.findPendingTrips();
+		domUpdates.displayUserDash(user, destinations);
     console.log(user);
-  }
+  } else {
+		domUpdates.displayErrorLoginMsg();
+	}
 }

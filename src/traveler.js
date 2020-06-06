@@ -16,37 +16,46 @@ class Traveler extends User {
 	findActiveTrips(today) {
 		this.activeTrips = this.trips.filter(trip => trip.date === today);
 	}
-//find length of trip too ^^
+
+//find array of trip date - duration
+//check if those arrays include today's date
+//assign those to this.activeTrips
 
 	findUpcomingTrips(today) {
-		const yyyy = today.substring(0, 4);
-		const mm = today.substring(6, 8);
-		const dd = today.substring(9);
+		let yyyy = today.substring(0, 4);
+		let mm = today.substring(5, 7);
+		let dd = today.substring(8);
 
-		this.upcomingTrips = this.trips.filter(trip => {
+		const upcomingTrips = this.trips.filter(trip => {
 			let tYYYY = trip.date.substring(0, 4);
-			let tMM = trip.date.substring(6, 8);
-			let tDD = trip.date.substring(9);
-			if (tYYYY > yyyy || 
-				tYYYY === yyyy && tMM > mm || 
-				tYYYY === yyyy && tMM === mm && tDD > dd) {
+			let tMM = trip.date.substring(5, 7);
+			let tDD = trip.date.substring(8);
+			if (tYYYY > yyyy) {
+				return trip;
+			} else if (tYYYY === yyyy && tMM > mm) {
+				return trip;
+			} else if (tYYYY === yyyy && tMM === mm && tDD > dd) {
 				return trip;
 			}
 		})
+
+		this.upcomingTrips = upcomingTrips.filter(trip => trip.status === 'approved');
 	}
 
 	findPastTrips(today) {
-		const yyyy = today.substring(0, 4);
-		const mm = today.substring(6, 8);
-		const dd = today.substring(9);
+		let yyyy = today.substring(0, 4);
+		let mm = today.substring(5, 7);
+		let dd = today.substring(8);
 
 		this.pastTrips = this.trips.filter(trip => {
 			let tYYYY = trip.date.substring(0, 4);
-			let tMM = trip.date.substring(6, 8);
-			let tDD = trip.date.substring(9);
-			if (tYYYY < yyyy || 
-				tYYYY === yyyy && tMM < mm || 
-				tYYYY === yyyy && tMM === mm && tDD < dd) {
+			let tMM = trip.date.substring(5, 7);
+			let tDD = trip.date.substring(8);
+			if (tYYYY < yyyy) {
+				return trip;
+			} else if (tYYYY === yyyy && tMM < mm) {
+				return trip;
+			} else if (tYYYY === yyyy && tMM === mm && tDD < dd) {
 				return trip;
 			}
 		})

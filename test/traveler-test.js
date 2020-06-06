@@ -103,7 +103,7 @@ describe('Traveler', () => {
 	it('should be able to find all upcoming trips based on todays date', () => {
 		user.findUpcomingTrips('2020/08/08');
 
-		expect(user.upcomingTrips).to.deep.equal([trips[0], trips[5]]);
+		expect(user.upcomingTrips).to.deep.equal([trips[0]]);
 	})
 
 	it('should be able to find all past trips based on todays date', () => {
