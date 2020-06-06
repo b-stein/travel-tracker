@@ -232,3 +232,51 @@ input {
 	overflow-y: hidden;
 	min-height: 150px;
 }
+
+.post-to-trips {
+	color: $accent-blue;
+	align-items: center;
+	background: white;
+	border: 3px solid $primary-color;
+	border-radius: 10px;
+	box-shadow: 1px 1px 115px black;
+	flex-direction: column;
+	height: 37%;
+	width: 36%;
+	margin: 0;
+	overflow-x: scroll;
+	padding: 5%;
+	top: 15%;
+	position: absolute;
+	z-index: 20;
+}
+
+h3 {
+	text-align: center;
+}
+
+.bootstrap-iso {
+	width: 70vw!important;
+}
+
+.col-sm-10.col-sm-offset-2 {
+	text-align: center;
+	padding-right: 80px;
+ }
+
+ #exit-form-btn {
+  background: white;
+  border: 2px double $primary-color;
+  border-radius: 5px;
+  color: $accent-blue;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+	margin: -8% -8% 3% -5%;
+	width: 30px;  position: fixed;
+  transition: .3s ease;
+  &:hover {
+    background: $accent-yellow;
+    transition: .3s ease;
+  }
+}

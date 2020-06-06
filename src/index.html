@@ -2,6 +2,13 @@
 <html lang="en-US">
   <head>
 		<title>Travel Tracker</title>
+		<script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
+		<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+		<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+		<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: #ffffff !important;} .asteriskField{color: red;}</style>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/base.scss">
 		<link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
 	</head>
@@ -39,6 +46,227 @@
 		</form>
 		<img src='images/bahamas.jpg' alt='airplane in bahamas' class='background-img' role='background image'/>
 	</section>
+
+	<section class="post-to-trips hide">
+		<button id="exit-form-btn">X</button>
+		<h3 id="request-trip-title">Request A Trip</h3>
+		<div class="bootstrap-iso">
+			<div class="container-fluid">
+			 <div class="row">
+				<div class="col-md-6 col-sm-6 col-xs-12">
+				 <form action="https://formden.com/post/2GD50PDh/" class="form-horizontal" method="post">
+					<div class="form-group ">
+					 <label class="control-label col-sm-2 requiredField" for="select">
+						 Destination<span class="asteriskField">*</span>
+					 </label>
+					 <div class="col-sm-10">
+						<select class="select form-control" id="select" name="select">
+						 <option value="Lima, Peru">
+							Lima, Peru
+						 </option>
+						 <option value="Stockholm, Sweden">
+							Stockholm, Sweden
+						 </option>
+						 <option value="Sydney, Austrailia">
+							Sydney, Austrailia
+						 </option>
+						 <option value="Cartagena, Colombia">
+							Cartagena, Colombia
+						 </option>
+						 <option value="Madrid, Spain">
+							Madrid, Spain
+						 </option>
+						 <option value="Jakarta, Indonesia">
+							Jakarta, Indonesia
+						 </option>
+						 <option value="Paris, France">
+							Paris, France
+						 </option>
+						 <option value="Tokyo, Japan">
+							Tokyo, Japan
+						 </option>
+						 <option value="Amsterdam, Netherlands">
+							Amsterdam, Netherlands
+						 </option>
+						 <option value="Toronto, Canada">
+							Toronto, Canada
+						 </option>
+						 <option value="Mikonos, Greece">
+							Mikonos, Greece
+						 </option>
+						 <option value="Wellington, New Zealand">
+							Wellington, New Zealand
+						 </option>
+						 <option value="St. Peterburg, Russia">
+							St. Peterburg, Russia
+						 </option>
+						 <option value="Marrakesh, Morocco">
+							Marrakesh, Morocco
+						 </option>
+						 <option value="Manila, Philippines">
+							Manila, Philippines
+						 </option>
+						 <option value="Bangkok, Thailand">
+							Bangkok, Thailand
+						 </option>
+						 <option value="Jaipur, India">
+							Jaipur, India
+						 </option>
+						 <option value="Cape Town, South Africa">
+							Cape Town, South Africa
+						 </option>
+						 <option value="Quito, Ecuador">
+							Quito, Ecuador
+						 </option>
+						 <option value="Miami, Florida">
+							Miami, Florida
+						 </option>
+						 <option value="Tulum, Mexico">
+							Tulum, Mexico
+						 </option>
+						 <option value="Rome, Italy">
+							Rome, Italy
+						 </option>
+						 <option value="Copenhagen, Denmark">
+							Copenhagen, Denmark
+						 </option>
+						 <option value="Vilnius, Lithuania">
+							Vilnius, Lithuania
+						 </option>
+						 <option value="New York, New York">
+							New York, New York
+						 </option>
+						 <option value="London, England">
+							London, England
+						 </option>
+						 <option value="San Francisco, California">
+							San Francisco, California
+						 </option>
+						 <option value="San Juan, Puerto Rico">
+							San Juan, Puerto Rico
+						 </option>
+						 <option value="Willemstad, Cura&ccedil;ao">
+							Willemstad, Cura&ccedil;ao
+						 </option>
+						 <option value="Antananarivo, Madagascar">
+							Antananarivo, Madagascar
+						 </option>
+						 <option value="Colombo, Sri Lanka">
+							Colombo, Sri Lanka
+						 </option>
+						 <option value="Kathmandu, Nepal">
+							Kathmandu, Nepal
+						 </option>
+						 <option value="Brussels, Belgium">
+							Brussels, Belgium
+						 </option>
+						 <option value="Seoul, South Korea">
+							Seoul, South Korea
+						 </option>
+						 <option value="Anchorage, Alaska">
+							Anchorage, Alaska
+						 </option>
+						 <option value="Reykjav&iacute;k, Iceland">
+							Reykjav&iacute;k, Iceland
+						 </option>
+						 <option value="Frankfurt, Germany">
+							Frankfurt, Germany
+						 </option>
+						 <option value="Helsinki, Finland">
+							Helsinki, Finland
+						 </option>
+						 <option value="Porto, Portugal">
+							Porto, Portugal
+						 </option>
+						 <option value="La Isla Tortuga, Costa Rica">
+							La Isla Tortuga, Costa Rica
+						 </option>
+						 <option value="Montego Bay, Jamaica">
+							Montego Bay, Jamaica
+						 </option>
+						 <option value="Santo Domingo, Dominican Republic">
+							Santo Domingo, Dominican Republic
+						 </option>
+						 <option value="Nassau, The Bahamas">
+							Nassau, The Bahamas
+						 </option>
+						 <option value="Caye Caulker, Belize">
+							Caye Caulker, Belize
+						 </option>
+						 <option value="Calgary, Canada">
+							Calgary, Canada
+						 </option>
+						 <option value="Victoria, Seychelles">
+							Victoria, Seychelles
+						 </option>
+						 <option value="Z&uuml;rich, Switzerland">
+							Z&uuml;rich, Switzerland
+						 </option>
+						 <option value="Dar es Salaam, Tanzania">
+							Dar es Salaam, Tanzania
+						 </option>
+						 <option value="Castries, St Lucia">
+							Castries, St Lucia
+						 </option>
+						 <option value="Hobart, Tasmania">
+							Hobart, Tasmania
+						 </option>
+						</select>
+					 </div>
+					</div>
+					<div class="form-group ">
+					 <label class="control-label col-sm-2 requiredField" for="date">
+						Date<span class="asteriskField">*</span>
+					 </label>
+					 <div class="col-sm-10">
+						<div class="input-group">
+						 <div class="input-group-addon">
+							<i class="fa fa-calendar"></i>
+						 </div>
+						 <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
+						</div>
+					 </div>
+					</div>
+					<div class="form-group ">
+					 <label class="control-label col-sm-2 requiredField" for="number1">
+						Duration<span class="asteriskField">*</span>
+					 </label>
+					 <div class="col-sm-10">
+						<input class="form-control" id="number1" name="number1" placeholder="in days" type="text"/>
+					 </div>
+					</div>
+					<div class="form-group ">
+					 <label class="control-label col-sm-2 requiredField" for="number">
+						Travelers<span class="asteriskField">*</span>
+					 </label>
+					 <div class="col-sm-10">
+						<input class="form-control" id="number" name="number" placeholder="how many people are going?" type="text"/>
+					 </div>
+					</div>
+					<div class="form-group">
+					 <div class="col-sm-10 col-sm-offset-2">
+						<input name="_honey" style="display:none" type="text"/>
+						<button class="btn btn-warning " name="submit" type="submit">Submit</button>
+					 </div>
+					</div>
+				 </form>
+				</div>
+			 </div>
+			</div>
+		 </div>
+	</section>
+	<script>
+		$(document).ready(function(){
+			var date_input=$('input[name="date"]'); //our date input has the name "date"
+			var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+			date_input.datepicker({
+				format: 'mm/dd/yyyy',
+				container: container,
+				todayHighlight: true,
+				autoclose: true,
+			})
+		})
+	</script>
 
 		<section class='traveler-dash hide'>
 			<h1 class='welcome-banner'>Welcome user!</h1>
