@@ -13,6 +13,7 @@ const pwdInput = document.querySelector('.pwd-input');
 
 let today;
 let user;
+let usernameID;
 let allUsers;
 let agent;
 let trips;
@@ -30,7 +31,6 @@ function findInputs(event, destinations) {
 	const destID = destinations.find(dest => dest.destination === chosenDest).id;
 	const travelerInput = Number(document.querySelector('.traveler-input').value);
 	const chosenDate = document.querySelector('.date-picker').value;
-	console.log(chosenDate);
 	const durationInput = Number(document.querySelector('.duration-input').value);
 	submitRequest(destID, travelerInput, chosenDate, durationInput);
 }
@@ -55,7 +55,29 @@ function submitRequest(destID, travelerInput, chosenDate, durationInput) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.log(error))
+		.then(() => displayTripInfo(destinations, destID, durationInput, travelerInput));
 		//hideForm + update dashboard
+}
+
+function displayTripInfo(destinations, destID, durationInput, travelerInput) {
+	const tripCost = user.findTripCost(destinations, destID, durationInput, travelerInput);
+	document.querySelector('.estimated-cost').innerText = `Estimate cost: ${tripCost}`;
+	updateUserInfo();
+	// domUpdates.displayUserInfo(user, destinations, today);
+}
+
+function updateUserInfo() {
+	trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
+		.then(response => response.json())
+		.catch(error => console.log(error))
+	
+	return Promise.resolve(trips)
+		.then(response => {
+			trips = response.trips;
+			user = new Traveler(allUsers[usernameID - 1], 'traveler', 'travel2020', trips);
+			user.findPendingTrips();
+		})
+		.then(() => domUpdates.displayUserInfo(user, destinations, today))
 }
 
 function fetchDate() {
@@ -105,7 +127,6 @@ function loginHandler(loginUser, loginPwd) {
     domUpdates.displayAgentDash(agent, destinations, today);
     console.log(agent);
   } else if (login.authenticated === true && login.agency === false) {
-		let usernameID;
 		if (isNaN(Number(loginUser.slice(-2)))) {
 			usernameID = '0' + loginUser.slice(-1);
 		} else {

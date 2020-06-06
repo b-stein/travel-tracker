@@ -1,7 +1,7 @@
 import User from './user';
 
 class Traveler extends User {
-	constructor(data, username, pwd, trips) {
+	constructor(data, username = undefined, pwd = undefined, trips) {
 		super(username, pwd, true);
 		this.id = data.id;
 		this.name = data.name;
@@ -63,6 +63,13 @@ class Traveler extends User {
 			return sum;
 		}, 0);
 
+		return `$${totalCost}`;
+	}
+
+	findTripCost(destinations, destID, durationInput, travelerInput) {
+		const foundTrip = destinations.find(spot => spot.id === destID);
+		const cost = (foundTrip.estimatedLodgingCostPerDay * durationInput) + (foundTrip.estimatedFlightCostPerPerson * travelerInput)
+		const totalCost = cost + (cost / 10);
 		return `$${totalCost}`;
 	}
 }
