@@ -20,6 +20,43 @@ let destinations;
 
 window.addEventListener('load', fetchDate);
 document.querySelector('.login-btn').addEventListener('click', (e) => fetchLoginUser(e));
+document.querySelector('.book-trip').addEventListener('click', (e) => domUpdates.displayReqForm(e));
+document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
+document.querySelector('.btn-warning').addEventListener('click', (e) => findInputs(e, destinations));
+
+function findInputs(event, destinations) {
+	event.preventDefault();
+	const chosenDest = document.querySelector('.chosen-destination').value;
+	const destID = destinations.find(dest => dest.destination === chosenDest).id;
+	const travelerInput = Number(document.querySelector('.traveler-input').value);
+	const chosenDate = document.querySelector('.date-picker').value;
+	console.log(chosenDate);
+	const durationInput = Number(document.querySelector('.duration-input').value);
+	submitRequest(destID, travelerInput, chosenDate, durationInput);
+}
+
+function submitRequest(destID, travelerInput, chosenDate, durationInput) {
+	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			id: Date.now(),
+			userID: user.id,
+			destinationID: destID,
+			travelers: travelerInput,
+			date: chosenDate,
+			duration: durationInput,
+			status: 'pending',
+			suggestedActivities: []
+		})
+	})
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.log(error))
+		//hideForm + update dashboard
+}
 
 function fetchDate() {
 	const currentDate = new Date();

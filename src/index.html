@@ -17,14 +17,14 @@
 			<h1 class='main-title'>Travel Tracker
 				<img src="images/map.png" alt="map icon" class="icon header-map-icon" role="logo"/>
 			</h1>
-			<form id="search" class="search">
+			<form id="search" class="search hide">
 				<input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search clients..." role="searchbox">
 				<button role="button" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button">
 					<img src="images/search.png" class='icon' alt="search button">
 				</button>
 			</form>
 			<div class='today'>today: </div>
-			<button class='book-trip' type='button' name='book trip button'>Book Trip</button>
+			<button class='book-trip hide' type='button' name='book trip button'>Book Trip</button>
 		</header>
 
 	<main>
@@ -60,7 +60,7 @@
 						 Destination<span class="asteriskField">*</span>
 					 </label>
 					 <div class="col-sm-10">
-						<select class="select form-control" id="select" name="select">
+						<select class="select form-control chosen-destination" id="select" name="select">
 						 <option value="Lima, Peru">
 							Lima, Peru
 						 </option>
@@ -223,7 +223,7 @@
 						 <div class="input-group-addon">
 							<i class="fa fa-calendar"></i>
 						 </div>
-						 <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
+						 <input class="form-control date-picker" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
 						</div>
 					 </div>
 					</div>
@@ -232,7 +232,7 @@
 						Duration<span class="asteriskField">*</span>
 					 </label>
 					 <div class="col-sm-10">
-						<input class="form-control" id="number1" name="number1" placeholder="in days" type="text"/>
+						<input class="form-control duration-input" id="number1" name="number1" placeholder="in days" type="text"/>
 					 </div>
 					</div>
 					<div class="form-group ">
@@ -240,7 +240,7 @@
 						Travelers<span class="asteriskField">*</span>
 					 </label>
 					 <div class="col-sm-10">
-						<input class="form-control" id="number" name="number" placeholder="how many people are going?" type="text"/>
+						<input class="form-control traveler-input" id="number" name="number" placeholder="how many people are going?" type="text"/>
 					 </div>
 					</div>
 					<div class="form-group">
@@ -260,7 +260,7 @@
 			var date_input=$('input[name="date"]'); //our date input has the name "date"
 			var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
 			date_input.datepicker({
-				format: 'mm/dd/yyyy',
+				format: 'yyyy/mm/dd',
 				container: container,
 				todayHighlight: true,
 				autoclose: true,

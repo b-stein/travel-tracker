@@ -2,6 +2,7 @@ let domUpdates = {
   displayAgentDash(agent, destinations, today) {
 		this.querySelector('.login-wrapper').classList.add('hide');
 		this.querySelector('.agent-dash').classList.remove('hide');
+		this.querySelector('.search').classList.remove('hide');
 		this.displayAgentInfo(agent, destinations, today);
 	},
 	
@@ -12,6 +13,7 @@ let domUpdates = {
   displayUserDash(user, destinations, today) {
     document.querySelector('.login-wrapper').classList.add('hide');
     document.querySelector('.traveler-dash').classList.remove('hide');
+		document.querySelector('.book-trip').classList.remove('hide');
 		this.displayUserInfo(user, destinations, today);
 	},
 	
@@ -58,6 +60,14 @@ let domUpdates = {
 			</div>`;
 			elementContainer.insertAdjacentHTML('beforeend', cardHtml);
 		})
+	},
+
+	displayReqForm(e) {
+		document.querySelector('.post-to-trips').classList.remove('hide');
+	},
+
+	exitForm() {
+		document.querySelector('.post-to-trips').classList.add('hide');
 	}
 }
 
