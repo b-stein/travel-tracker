@@ -104,6 +104,10 @@ let domUpdates = {
 		document.querySelector('.trip-information').innerHTML = '';
 		document.getElementById('overlay').remove();
 	}
+
+	//if trip card is 'pending', buttons to approve or deny appear
+	//if approved, post request (to modify trip)
+	//if denied, delete request
 }
 
 export default domUpdates;
