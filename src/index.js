@@ -21,9 +21,9 @@ let destinations;
 
 window.addEventListener('load', fetchDate);
 document.querySelector('.login-btn').addEventListener('click', (e) => fetchLoginUser(e));
-document.querySelector('.book-trip').addEventListener('click', (e) => domUpdates.displayReqForm(e));
+document.querySelector('.book-trip').addEventListener('click', domUpdates.displayReqForm);
 document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
-document.querySelector('.btn-warning').addEventListener('click', (e) => findInputs(e, destinations));
+document.querySelector('.form-btn').addEventListener('click', (e) => findInputs(e, destinations));
 // document.querySelectorAll('.modal').forEach(area => area.addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers)));
 document.querySelector('main').addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers));
 

@@ -116,6 +116,7 @@ button img {
 	grid-template-columns: 1fr 4fr;
 	align-items: center;
 	grid-gap: 15px;
+	margin-top: 20px;
 }
 
 .login-btn {
@@ -298,6 +299,13 @@ h3 {
   }
 }
 
+.form-btn {
+	margin-top: 30px;
+	margin: 5% 40% 2% 40%;
+	height: 36px;
+	width: 91px;
+}
+
 .trip-information {
 	background: white;
 	border: 3px solid $primary-color;
@@ -341,4 +349,8 @@ h3 {
   top: 0;
   width: 100%;
   z-index: 19;
+}
+
+.drp-calendar {
+	color: black;
 }

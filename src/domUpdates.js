@@ -64,6 +64,11 @@ let domUpdates = {
 
 	displayReqForm() {
 		document.querySelector('.post-to-trips').classList.remove('hide');
+		document.querySelector('.chosen-destination').value = 'Lima, Peru';
+		document.querySelector('.traveler-input').value = '';
+		document.querySelector('.date-picker').value = '';
+		document.querySelector('.duration-input').value = '';
+		document.querySelector('.estimated-cost').innerText = '';
 	},
 
 	exitForm() {
