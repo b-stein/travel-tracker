@@ -13,6 +13,9 @@ class User {
 		if (this.username === 'agency') {
 			this.agency = true;
 		}
+		if (Number(this.username.slice(-2)) > 50) {
+			this.authenticated = false;
+		}
 	}
 }
 

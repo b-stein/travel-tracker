@@ -192,9 +192,6 @@ input {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
-	.text {
-		display: none;
-	}
 	h4 {
 		font-weight: normal;
 	}
@@ -203,7 +200,6 @@ input {
 		transition: .8s ease;
 	}
 	&:hover .text {
-		display: block;
 		font-size: 20px;
     opacity: 100%;
     transition: .5s ease;
@@ -216,10 +212,39 @@ input {
 }
 
 .card-photo {
+	position: relative;
+	z-index: 5;
+}
+
+.text {
+	background: $accent-yellow;
+	opacity: 80%;
+	color: black;
+	font-weight: 700;
+	font-size: 0px;
+	opacity: 0%;
+	padding: 0%;
+	position: absolute;
+	z-index: 10;
+	text-align: center;
+	width: 0%;
+	transition: .5s ease;
+}
+
+.card-photo-container {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	position: relative;
+}
+
+.card-photo {
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-size: cover;
 	border-radius: 7px;
+	position: relative;
+	z-index: 5;
 	cursor: pointer;
 	height: 117px;
 	transition: .8s ease;
@@ -265,7 +290,7 @@ h3 {
 	padding-right: 80px;
  }
 
- #exit-form-btn, #exit-btn {
+ #exit-form-btn {
   background: white;
   border: 2px double $primary-color;
   border-radius: 5px;
@@ -273,7 +298,7 @@ h3 {
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
-	margin: -8% -8% 3% -5%;
+	margin: -8% -10% 9% -7%;
 	width: 30px;  position: fixed;
   transition: .3s ease;
   &:hover {

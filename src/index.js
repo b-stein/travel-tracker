@@ -117,7 +117,7 @@ function fetchLoginUser(event) {
       destinations = response[2].destinations;
     })
     .then(() => loginHandler(loginUser, loginPwd))
-    .catch(domUpdates.displayErrorLoginMsg())
+    .catch(error => console.log(error))
 }
 
 function loginHandler(loginUser, loginPwd) {
@@ -129,7 +129,6 @@ function loginHandler(loginUser, loginPwd) {
 		agent.findPendingTrips();
 		agent.findActiveTrips(today);
     domUpdates.displayAgentDash(agent, destinations, today);
-    console.log(agent);
   } else if (login.authenticated === true && login.agency === false) {
 		if (isNaN(Number(loginUser.slice(-2)))) {
 			usernameID = '0' + loginUser.slice(-1);
@@ -142,7 +141,6 @@ function loginHandler(loginUser, loginPwd) {
 		user.findPastTrips(today);
 		user.findPendingTrips();
 		domUpdates.displayUserDash(user, destinations, today);
-    console.log(user);
   } else {
 		domUpdates.displayErrorLoginMsg();
 	}
