@@ -36,15 +36,15 @@ class Traveler extends User {
 	findUpcomingTrips(today) {
 		const upcomingTrips = this.trips.filter(trip => trip.date > today);
 
-		this.upcomingTrips = upcomingTrips.filter(trip => trip.status === 'approved');
+		this.upcomingTrips = upcomingTrips.filter(trip => trip.status === 'approved').sort((a, b) => a.date - b.date);
 	}
 
 	findPastTrips(today) {
-		this.pastTrips = this.trips.filter(trip => trip.date < today).filter(trip => trip.status === 'approved');
+		this.pastTrips = this.trips.filter(trip => trip.date < today).filter(trip => trip.status === 'approved').sort((a, b) => a.date - b.date);
 	}
 
 	findPendingTrips() {
-		this.pendingTrips = this.trips.filter(trip => trip.status === 'pending');
+		this.pendingTrips = this.trips.filter(trip => trip.status === 'pending').sort((a, b) => a.date - b.date);
 	}
 
 	findYearTripCost(today, destinations) {
