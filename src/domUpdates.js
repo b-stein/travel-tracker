@@ -2,6 +2,7 @@ let domUpdates = {
   displayAgentDash(agent, destinations, today) {
 		this.querySelector('.login-wrapper').classList.add('hide');
 		this.querySelector('.agent-dash').classList.remove('hide');
+		this.querySelector('.search').classList.remove('hide');
 		this.displayAgentInfo(agent, destinations, today);
 	},
 	
@@ -12,6 +13,7 @@ let domUpdates = {
   displayUserDash(user, destinations, today) {
     document.querySelector('.login-wrapper').classList.add('hide');
     document.querySelector('.traveler-dash').classList.remove('hide');
+		document.querySelector('.book-trip').classList.remove('hide');
 		this.displayUserInfo(user, destinations, today);
 	},
 	
@@ -58,6 +60,49 @@ let domUpdates = {
 			</div>`;
 			elementContainer.insertAdjacentHTML('beforeend', cardHtml);
 		})
+	},
+
+	displayReqForm() {
+		document.querySelector('.post-to-trips').classList.remove('hide');
+	},
+
+	exitForm() {
+		document.querySelector('.post-to-trips').classList.add('hide');
+	},
+
+	openTripInfo(trips, destinations, allUsers) {
+		if (event.target.className === 'information') {
+			this.displayTripInfo(trips, destinations, allUsers);
+		} else if (event.target.id === 'exit-btn') {
+			this.closeTripInfo();
+		}
+	},
+
+	displayTripInfo(trips, destinations, allUsers) {
+		let tripInfoHTML = document.querySelector('.trip-information');
+		tripInfoHTML.classList.remove('hide');
+		const tripID = Number(event.target.closest('.trip-card').id);
+		const foundTrip = trips.find(trip => trip.id === tripID);
+		const foundDest = destinations.find(spot => spot.id === foundTrip.destinationID);
+		const foundUser = allUsers.find(user => user.id === foundTrip.userID);
+		tripInfoHTML.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+		let tripInfo = `
+			<button id="exit-btn">X</button>
+			<h3 id='trip-title'>${foundDest.destination} Trip</h3>
+			<h4>Booked Account</h4>
+			<p>${foundUser.name}</p>
+			<h4>Travelers on Trip</h4>
+			<p>${foundTrip.travelers}</p>
+			<h4>Trip length</h4>
+			<p>Starts ${foundTrip.date}, and lasts ${foundTrip.duration} days.</p>`
+		tripInfoHTML.insertAdjacentHTML('beforeend', tripInfo);
+		document.getElementById('trip-title').style.backgroundImage = `url(${foundDest.image})`;
+	},
+
+	closeTripInfo() {
+		document.querySelector('.trip-information').classList.add('hide');
+		document.querySelector('.trip-information').innerHTML = '';
+		document.getElementById('overlay').remove();
 	}
 }
 

@@ -13,6 +13,7 @@ const pwdInput = document.querySelector('.pwd-input');
 
 let today;
 let user;
+let usernameID;
 let allUsers;
 let agent;
 let trips;
@@ -20,6 +21,68 @@ let destinations;
 
 window.addEventListener('load', fetchDate);
 document.querySelector('.login-btn').addEventListener('click', (e) => fetchLoginUser(e));
+document.querySelector('.book-trip').addEventListener('click', (e) => domUpdates.displayReqForm(e));
+document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
+document.querySelector('.btn-warning').addEventListener('click', (e) => findInputs(e, destinations));
+// document.querySelectorAll('.modal').forEach(area => area.addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers)));
+document.querySelector('main').addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers));
+
+
+function findInputs(event, destinations) {
+	event.preventDefault();
+	const chosenDest = document.querySelector('.chosen-destination').value;
+	const destID = destinations.find(dest => dest.destination === chosenDest).id;
+	const travelerInput = Number(document.querySelector('.traveler-input').value);
+	const chosenDate = document.querySelector('.date-picker').value;
+	const durationInput = Number(document.querySelector('.duration-input').value);
+	submitRequest(destID, travelerInput, chosenDate, durationInput);
+}
+
+function submitRequest(destID, travelerInput, chosenDate, durationInput) {
+	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			id: Date.now(),
+			userID: user.id,
+			destinationID: destID,
+			travelers: travelerInput,
+			date: chosenDate,
+			duration: durationInput,
+			status: 'pending',
+			suggestedActivities: []
+		})
+	})
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.log(error))
+		.then(() => displayTripInfo(destinations, destID, durationInput, travelerInput));
+		//hideForm + update dashboard
+}
+
+function displayTripInfo(destinations, destID, durationInput, travelerInput) {
+	const tripCost = user.findTripCost(destinations, destID, durationInput, travelerInput);
+	document.querySelector('.estimated-cost').innerText = `Estimated cost: ${tripCost}`;
+	updateUserInfo();
+	// domUpdates.displayUserInfo(user, destinations, today);
+}
+
+function updateUserInfo() {
+	trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
+		.then(response => response.json())
+		.catch(error => console.log(error))
+	
+	return Promise.resolve(trips)
+		.then(response => {
+			trips = response.trips;
+			user = new Traveler(allUsers[usernameID - 1], 'traveler', 'travel2020', trips);
+			user.findPendingTrips();
+			document.querySelector('.pending-trips-container').innerHTML = '';
+		})
+		.then(() => domUpdates.displayUserInfo(user, destinations, today))
+}
 
 function fetchDate() {
 	const currentDate = new Date();
@@ -68,7 +131,6 @@ function loginHandler(loginUser, loginPwd) {
     domUpdates.displayAgentDash(agent, destinations, today);
     console.log(agent);
   } else if (login.authenticated === true && login.agency === false) {
-		let usernameID;
 		if (isNaN(Number(loginUser.slice(-2)))) {
 			usernameID = '0' + loginUser.slice(-1);
 		} else {
