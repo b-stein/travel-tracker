@@ -13,6 +13,8 @@ class Traveler extends User {
 		this.pendingTrips = [];
 	}
 
+	//updates trips method?
+
 	findActiveTrips(today) {
 		const activeTrips = this.trips.filter(trip => {
 			const endDate = this.addDays(trip.date, trip.duration);

@@ -24,6 +24,9 @@ document.querySelector('.login-btn').addEventListener('click', (e) => fetchLogin
 document.querySelector('.book-trip').addEventListener('click', (e) => domUpdates.displayReqForm(e));
 document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
 document.querySelector('.btn-warning').addEventListener('click', (e) => findInputs(e, destinations));
+// document.querySelectorAll('.modal').forEach(area => area.addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers)));
+document.querySelector('main').addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers));
+
 
 function findInputs(event, destinations) {
 	event.preventDefault();
@@ -61,7 +64,7 @@ function submitRequest(destID, travelerInput, chosenDate, durationInput) {
 
 function displayTripInfo(destinations, destID, durationInput, travelerInput) {
 	const tripCost = user.findTripCost(destinations, destID, durationInput, travelerInput);
-	document.querySelector('.estimated-cost').innerText = `Estimate cost: ${tripCost}`;
+	document.querySelector('.estimated-cost').innerText = `Estimated cost: ${tripCost}`;
 	updateUserInfo();
 	// domUpdates.displayUserInfo(user, destinations, today);
 }
@@ -76,6 +79,7 @@ function updateUserInfo() {
 			trips = response.trips;
 			user = new Traveler(allUsers[usernameID - 1], 'traveler', 'travel2020', trips);
 			user.findPendingTrips();
+			document.querySelector('.pending-trips-container').innerHTML = '';
 		})
 		.then(() => domUpdates.displayUserInfo(user, destinations, today))
 }
