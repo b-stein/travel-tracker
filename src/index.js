@@ -27,6 +27,7 @@ document.querySelector('.form-btn').addEventListener('click', (e) => findInputs(
 document.querySelector('main').addEventListener('click', () => clickHandler(trips, destinations, allUsers));
 document.querySelector('.search-btn').addEventListener('click', (e) => searchUsers(e));
 document.getElementById('search-mag-btn').addEventListener('submit', (e) => searchUsers(e));
+document.querySelector('.back-btn').addEventListener('click', () => domUpdates.displayAgentDash(agent, destinations, today));
 
 function searchUsers(event) {
 	event.preventDefault();
@@ -42,7 +43,6 @@ function searchUsers(event) {
 			searchedResults.push(userSpec);
 		}
 	})
-	console.log(searchedResults);
 	domUpdates.displaySearchResults(searchedResults, today, destinations);
 }
 
