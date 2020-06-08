@@ -13,8 +13,6 @@ class Traveler extends User {
 		this.pendingTrips = [];
 	}
 
-	//updates trips method?
-
 	findActiveTrips(today) {
 		const activeTrips = this.trips.filter(trip => {
 			const endDate = this.addDays(trip.date, trip.duration);
@@ -36,15 +34,16 @@ class Traveler extends User {
 	findUpcomingTrips(today) {
 		const upcomingTrips = this.trips.filter(trip => trip.date > today);
 
-		this.upcomingTrips = upcomingTrips.filter(trip => trip.status === 'approved');
+		this.upcomingTrips = upcomingTrips.filter(trip => trip.status === 'approved').sort((a, b) => a.date - b.date);
 	}
 
 	findPastTrips(today) {
-		this.pastTrips = this.trips.filter(trip => trip.date < today).filter(trip => trip.status === 'approved');
+		const pastTrips = this.trips.filter(trip => trip.date < today).filter(trip => trip.status === 'approved').sort((a, b) => a.date - b.date);
+		this.pastTrips = pastTrips.filter(trip => !this.activeTrips.includes(trip));
 	}
 
 	findPendingTrips() {
-		this.pendingTrips = this.trips.filter(trip => trip.status === 'pending');
+		this.pendingTrips = this.trips.filter(trip => trip.status === 'pending').sort((a, b) => a.date - b.date);
 	}
 
 	findYearTripCost(today, destinations) {
@@ -55,7 +54,9 @@ class Traveler extends User {
 			if (tYYYY === yyyy) return trip;
 		})
 
-		const totalCost = yearTrips.reduce((sum, trip) => {
+		const approvedYrTrips = yearTrips.filter(trip => trip.status === 'approved');
+
+		const totalCost = approvedYrTrips.reduce((sum, trip) => {
 			const foundTripSpec = destinations.find(spot => spot.id === trip.destinationID);
 			let tripCost = (foundTripSpec.estimatedFlightCostPerPerson * trip.travelers) 
 				+ (foundTripSpec.estimatedLodgingCostPerDay * trip.duration);
