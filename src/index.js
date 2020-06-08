@@ -24,8 +24,7 @@ document.querySelector('.login-btn').addEventListener('click', (e) => fetchLogin
 document.querySelector('.book-trip').addEventListener('click', domUpdates.displayReqForm);
 document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
 document.querySelector('.form-btn').addEventListener('click', (e) => findInputs(e, destinations));
-// document.querySelectorAll('.modal').forEach(area => area.addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers)));
-document.querySelector('main').addEventListener('click', () => domUpdates.openTripInfo(trips, destinations, allUsers));
+document.querySelector('main').addEventListener('click', () => clickHandler(trips, destinations, allUsers));
 
 
 function findInputs(event, destinations) {
@@ -36,6 +35,55 @@ function findInputs(event, destinations) {
 	const chosenDate = document.querySelector('.date-picker').value;
 	const durationInput = Number(document.querySelector('.duration-input').value);
 	submitRequest(destID, travelerInput, chosenDate, durationInput);
+}
+
+function clickHandler(trips, destinations, allUsers) {
+	if (event.target.className === 'information') {
+		domUpdates.displayTripInfo(trips, destinations, allUsers);
+	} else if (event.target.id === 'exit-btn') {
+		domUpdates.closeTripInfo();
+	}
+	if (event.target.className === 'approve-btn') {
+		const tripID = Number(event.target.closest('.trip-card').id);
+		changeTripStatus(tripID);
+	}
+	if (event.target.className === 'deny-btn') {
+		const tripID = Number(event.target.closest('.trip-card').id);
+		deleteTrip(tripID);
+	}
+}
+
+function changeTripStatus(tripID) {
+	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			id: tripID,
+			status: 'approved',
+		})
+	})
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.log(error))
+		.then(() => updateTripData())
+}
+
+function deleteTrip(tripID) {
+	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			id: tripID,
+		})
+	})
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.catch(error => console.log(error))
+		.then(() => updateTripData())
 }
 
 function submitRequest(destID, travelerInput, chosenDate, durationInput) {
@@ -58,18 +106,16 @@ function submitRequest(destID, travelerInput, chosenDate, durationInput) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.log(error))
-		.then(() => displayTripInfo(destinations, destID, durationInput, travelerInput));
-		//hideForm + update dashboard
+		.then(() => updatePending(destinations, destID, durationInput, travelerInput));
 }
 
-function displayTripInfo(destinations, destID, durationInput, travelerInput) {
+function updatePending(destinations, destID, durationInput, travelerInput) {
 	const tripCost = user.findTripCost(destinations, destID, durationInput, travelerInput);
 	document.querySelector('.estimated-cost').innerText = `Estimated cost: ${tripCost}`;
-	updateUserInfo();
-	// domUpdates.displayUserInfo(user, destinations, today);
+	updateTripData();
 }
 
-function updateUserInfo() {
+function updateTripData() {
 	trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
 		.then(response => response.json())
 		.catch(error => console.log(error))
@@ -77,11 +123,18 @@ function updateUserInfo() {
 	return Promise.resolve(trips)
 		.then(response => {
 			trips = response.trips;
-			user = new Traveler(allUsers[usernameID - 1], 'traveler', 'travel2020', trips);
-			user.findPendingTrips();
-			document.querySelector('.pending-trips-container').innerHTML = '';
+			if (user !== undefined) {
+				user = new Traveler(allUsers[usernameID - 1], 'traveler', 'travel2020', trips);
+				user.findPendingTrips();
+				document.querySelector('.pending-trips-container').innerHTML = '';
+				domUpdates.displayUserInfo(user, destinations, today);
+			} else {
+				agent = new Agent('agency', 'traveler2020', trips);
+				agent.findPendingTrips();
+				document.querySelector('.request-container').innerHTML = '';
+				domUpdates.displayAgentInfo(agent, destinations, today);
+			}
 		})
-		.then(() => domUpdates.displayUserInfo(user, destinations, today))
 }
 
 function fetchDate() {

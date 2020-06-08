@@ -35,12 +35,12 @@ let domUpdates = {
 		this.generateTripCards(pendingTripsHTML, user.pendingTrips, destinations);
 	},
 
-	displayAgentInfo(agent, destinations,today) {
+	displayAgentInfo(agent, destinations, today) {
 		const yearRevenue = agent.findYearRevenue(today, destinations);
 		document.querySelector('.revenue').innerText = `${today.substring(0, 4)} current revenue: ${yearRevenue}`;
 		let requestsHTML = document.querySelector('.request-container');
 		let currentTripsHTML = document.querySelector('.active-trips-container');
-		this.generateTripCards(requestsHTML, agent.pendingTrips, destinations);
+		this.generatePendRequests(requestsHTML, agent.pendingTrips, destinations);
 		this.generateTripCards(currentTripsHTML, agent.activeTrips, destinations);
 	},
 
@@ -62,6 +62,28 @@ let domUpdates = {
 		})
 	},
 
+	generatePendRequests(elementContainer, tripArray, destinations) {
+		tripArray.forEach(trip => {
+			let foundDestSpec = destinations.find(dest => dest.id === trip.destinationID);
+			let cardHtml = `
+			<div class='trip-card' id=${trip.id}>
+				<h3>${foundDestSpec.destination}</h3>
+				<div class='card-photo-container'>
+					<img src=${foundDestSpec.image} class='card-photo' alt='${foundDestSpec.alt}'> 
+					<div class="text">
+          	<div class="information">Click for Details</div>
+        	</div>
+				</div>
+				<div class='card-bottom'>
+					<h4>Date: ${trip.date}, Duration: ${trip.duration} days</h4>
+					<button type="approve" class='approve-btn'>Approve</button>
+					<button type="deny" class='deny-btn'>Deny</button>
+				</div>
+			</div>`;
+			elementContainer.insertAdjacentHTML('beforeend', cardHtml);
+		})
+	},
+
 	displayReqForm() {
 		document.querySelector('.post-to-trips').classList.remove('hide');
 		document.querySelector('.chosen-destination').value = 'Lima, Peru';
@@ -73,14 +95,6 @@ let domUpdates = {
 
 	exitForm() {
 		document.querySelector('.post-to-trips').classList.add('hide');
-	},
-
-	openTripInfo(trips, destinations, allUsers) {
-		if (event.target.className === 'information') {
-			this.displayTripInfo(trips, destinations, allUsers);
-		} else if (event.target.id === 'exit-btn') {
-			this.closeTripInfo();
-		}
 	},
 
 	displayTripInfo(trips, destinations, allUsers) {
@@ -99,7 +113,11 @@ let domUpdates = {
 			<h4>Travelers on Trip</h4>
 			<p>${foundTrip.travelers}</p>
 			<h4>Trip length</h4>
-			<p>Starts ${foundTrip.date}, and lasts ${foundTrip.duration} days.</p>`
+			<p>Starts ${foundTrip.date}, lasts ${foundTrip.duration} days.</p>
+			<h4>Lodging Costs</h4>
+			<p>$${foundDest.estimatedLodgingCostPerDay} per day, for ${foundTrip.duration} days.</p>
+			<h4>Flight Cost</h4>
+			<p>$${foundDest.estimatedFlightCostPerPerson} per person, for ${foundTrip.travelers} travelers.</p>`
 		tripInfoHTML.insertAdjacentHTML('beforeend', tripInfo);
 		document.getElementById('trip-title').style.backgroundImage = `url(${foundDest.image})`;
 	},
