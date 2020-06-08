@@ -126,11 +126,108 @@ let domUpdates = {
 		document.querySelector('.trip-information').classList.add('hide');
 		document.querySelector('.trip-information').innerHTML = '';
 		document.getElementById('overlay').remove();
+	},
+
+	displaySearchResults(searchedResults, today, destinations) {
+		document.querySelector('.agent-dash').classList.add('hide');
+		document.querySelector('.agent-search').classList.remove('hide');
+	
+		searchedResults.forEach(userResult => {
+			const yearPurchases = userResult.findYearTripCost(today, destinations);
+			let userPendingTrips = userResult.pendingTrips.map(trip => {
+				let foundDestSpec = destinations.find(dest => dest.id === trip.destinationID);
+				return `
+				<div class='admin-trip-card trip-card' id=${trip.id}>
+					<h3>${foundDestSpec.destination}</h3>
+					<h4>[pending]</h4>
+					<div class='card-photo-container'>
+						<img src=${foundDestSpec.image} class='card-photo' alt='${foundDestSpec.alt}'> 
+						<div class="text">
+							<div class="information">Click for Details</div>
+						</div>
+					</div>
+					<div class='card-bottom'>
+						<h4>Date: ${trip.date}, Duration: ${trip.duration} days</h4>
+						<button type="approve" class='approve-btn'>Approve</button>
+						<button type="deny" class='deny-btn'>Deny</button>
+					</div>
+				</div>`
+			})
+
+			let userUpcomingTrips = userResult.upcomingTrips.map(trip => {
+				let foundDestSpec = destinations.find(dest => dest.id === trip.destinationID);
+				return `
+				<div class='admin-trip-card trip-card' id=${trip.id}>
+					<h3>${foundDestSpec.destination}</h3>
+					<h4>[upcoming]</h4>
+					<div class='card-photo-container'>
+						<img src=${foundDestSpec.image} class='card-photo' alt='${foundDestSpec.alt}'> 
+						<div class="text">
+							<div class="information">Click for Details</div>
+						</div>
+					</div>
+					<div class='card-bottom'>
+						<h4>Date: ${trip.date}, Duration: ${trip.duration} days</h4>
+						<button type="delete" class='delete-btn'>Delete</button>
+					</div>
+				</div>`
+			})
+
+			let userActiveTrips = userResult.activeTrips.map(trip => {
+				let foundDestSpec = destinations.find(dest => dest.id === trip.destinationID);
+				return `
+				<div class='admin-trip-card trip-card' id=${trip.id}>
+					<h3>${foundDestSpec.destination}</h3>
+					<h4>[active]</h4>
+					<div class='card-photo-container'>
+						<img src=${foundDestSpec.image} class='card-photo' alt='${foundDestSpec.alt}'> 
+						<div class="text">
+							<div class="information">Click for Details</div>
+						</div>
+					</div>
+					<div class='card-bottom'>
+						<h4>Date: ${trip.date}, Duration: ${trip.duration} days</h4>
+					</div>
+				</div>`
+			})
+
+			let userPastTrips = userResult.pastTrips.map(trip => {
+				let foundDestSpec = destinations.find(dest => dest.id === trip.destinationID);
+				return `
+				<div class='admin-trip-card trip-card' id=${trip.id}>
+					<h3>${foundDestSpec.destination}</h3>
+					<h4>[past]</h4>
+					<div class='card-photo-container'>
+						<img src=${foundDestSpec.image} class='card-photo' alt='${foundDestSpec.alt}'> 
+						<div class="text">
+							<div class="information">Click for Details</div>
+						</div>
+					</div>
+					<div class='card-bottom'>
+						<h4>Date: ${trip.date}, Duration: ${trip.duration} days</h4>
+					</div>
+				</div>`
+			})
+
+			let userSection = `
+			<section class='searched-user-container modal' id=${userResult.id}>
+				<h3>${userResult.name}</h3>
+				<h4>${today.substring(0, 4)} Travel Tracker expenses: ${yearPurchases}</h4>
+				<div class='user-trips-container'>
+					${userPendingTrips}
+					${userUpcomingTrips}
+					${userActiveTrips}
+					${userPastTrips}
+				</div>
+			</section>`;
+			document.querySelector('.agent-search').insertAdjacentHTML('beforeend', userSection);
+		})
 	}
 
-	//if trip card is 'pending', buttons to approve or deny appear
-	//if approved, post request (to modify trip)
-	//if denied, delete request
+	//display each user's name, list of all
+	//trips, total amt they've spent
+	//bt to approve trip requests & 
+	//delete upcoming trips
 }
 
 export default domUpdates;

@@ -25,7 +25,26 @@ document.querySelector('.book-trip').addEventListener('click', domUpdates.displa
 document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
 document.querySelector('.form-btn').addEventListener('click', (e) => findInputs(e, destinations));
 document.querySelector('main').addEventListener('click', () => clickHandler(trips, destinations, allUsers));
+document.querySelector('.search-btn').addEventListener('click', (e) => searchUsers(e));
+document.getElementById('search-mag-btn').addEventListener('submit', (e) => searchUsers(e));
 
+function searchUsers(event) {
+	event.preventDefault();
+	const search = document.getElementById('search-input').value;
+	const searchedResults = []
+	allUsers.forEach(user => {
+		if (user.name.includes(search)) {
+			const userSpec = new Traveler(user, undefined, undefined, trips);
+			userSpec.findActiveTrips(today);
+			userSpec.findUpcomingTrips(today);
+			userSpec.findPastTrips(today);
+			userSpec.findPendingTrips();
+			searchedResults.push(userSpec);
+		}
+	})
+	console.log(searchedResults);
+	domUpdates.displaySearchResults(searchedResults, today, destinations);
+}
 
 function findInputs(event, destinations) {
 	event.preventDefault();

@@ -214,6 +214,26 @@ input {
   }
 }
 
+.admin-trip-card {
+	background-color: #E67E22;
+	border: 2px solid #DAF7A6;
+	border-radius: 7px;
+	cursor: pointer;
+	height: 250px;
+	margin: 5px 11px;
+	padding: 0 13px;
+	width: 195px;
+	min-width: 195px;
+	opacity: 88%;
+	font-weight: normal;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	h4 {
+		font-size: 14px;
+	}
+}
+
 .card-photo {
 	position: relative;
 	z-index: 5;
@@ -260,6 +280,14 @@ input {
 	overflow-x: auto;
 	overflow-y: hidden;
 	min-height: 150px;
+}
+
+.user-trips-container {
+	display: flex;
+  flex-wrap: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+	height: 261px;
 }
 
 .post-to-trips {
@@ -403,5 +431,23 @@ h3 {
 		grid-area: btn2;
 		width: 66px;
 		margin-bottom: 7px;
+	}
+	.delete-btn {
+		background-color: $accent-blue;
+		grid-area: btn2;
+		width: 66px;
+		margin-bottom: 7px;
+	} 
+}
+
+.searched-user-container {
+	color: white;
+	height: 340px;
+	h3, h4 {
+		margin: 0;
+		text-align: center;
+	}
+	h4 {
+		font-weight: normal;
 	}
 }
