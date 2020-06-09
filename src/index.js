@@ -7,6 +7,7 @@ import Traveler from './traveler';
 import Agent from './agent';
 import User from './user';
 import domUpdates from './domUpdates';
+import FetchCall from './fetchCall';
 
 const usernameInput = document.querySelector('.username-input');
 const pwdInput = document.querySelector('.pwd-input');
@@ -19,12 +20,13 @@ let allUsers;
 let agent;
 let trips;
 let destinations;
+let fetchCall;
 
 window.addEventListener('load', fetchDate);
 document.querySelector('.login-btn').addEventListener('click', () => fetchLoginUser(event));
 document.querySelector('.book-trip').addEventListener('click', domUpdates.displayReqForm);
 document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
-document.querySelector('.form-btn').addEventListener('click', () => findInputs(event, destinations));
+document.querySelector('.btn-warning').addEventListener('click', () => findInputs(event, destinations));
 document.querySelector('.clear-form').addEventListener('click', () => domUpdates.clearForm(event));
 document.querySelector('main').addEventListener('click', () => clickHandler(trips, destinations, allUsers));
 document.querySelector('.search-btn').addEventListener('click', () => searchUsers(event));
@@ -51,11 +53,17 @@ function searchUsers(event) {
 function findInputs(event, destinations) {
 	event.preventDefault();
 	const chosenDest = document.querySelector('.chosen-destination').value;
-	const destID = destinations.find(dest => dest.destination === chosenDest).id;
-	const travelerInput = Number(document.querySelector('.traveler-input').value);
-	const chosenDate = document.querySelector('.date-picker').value;
-	const durationInput = Number(document.querySelector('.duration-input').value);
-	submitRequest(destID, travelerInput, chosenDate, durationInput);
+	const tripRequest = {
+		id: Date.now(),
+		userID: user.id,
+		destinationID: destinations.find(dest => dest.destination === chosenDest).id,
+		travelers: Number(document.querySelector('.traveler-input').value),
+		date: document.querySelector('.date-picker').value,
+		duration: Number(document.querySelector('.duration-input').value),
+		status: 'pending',
+		suggestedActivities: []
+	}
+	submitRequest(tripRequest);
 }
 
 function clickHandler(trips, destinations, allUsers) {
@@ -65,101 +73,59 @@ function clickHandler(trips, destinations, allUsers) {
 		domUpdates.closeTripInfo();
 	}
 	if (event.target.className === 'approve-btn') {
-		const tripID = Number(event.target.closest('.trip-card').id);
-		changeTripStatus(tripID);
+		const tripUpdate = {
+			id: Number(event.target.closest('.trip-card').id),
+			status: 'approved',
+		};
+		changeTripStatus(tripUpdate);
 	}
-	// split event target classname into an array on empty spaces
-	// check with .includes for the string your looking for
-	// .split(' ')
 	if (event.target.className === 'approve-btn search-view') {
-		const tripID = Number(event.target.closest('.trip-card').id);
 		const foundUserID = Number(event.target.closest('.searched-user-container').id);
-		changeTripStatus(tripID, foundUserID);
+		const tripUpdate = {
+			id: Number(event.target.closest('.trip-card').id),
+			status: 'approved',
+		};
+		changeTripStatus(tripUpdate, foundUserID);
 	}
 	if (event.target.className === 'deny-btn') {
-		const tripID = Number(event.target.closest('.trip-card').id);
-		deleteTrip(tripID);
+		const foundTrip = { id: Number(event.target.closest('.trip-card').id) }
+		deleteTrip(foundTrip);
 	}
 	if (event.target.className === 'deny-btn search-view') {
-		console.log('click');
-		const tripID = Number(event.target.closest('.trip-card').id);
 		const foundUserID = Number(event.target.closest('.searched-user-container').id);
-		changeTripStatus(tripID, foundUserID);
+		const foundTrip = { id: Number(event.target.closest('.trip-card').id) }
+		deleteTrip(foundTrip, foundUserID);
 	}
 	if (event.target.className === 'delete-btn') {
-		const tripID = Number(event.target.closest('.trip-card').id);
 		const foundUserID = Number(event.target.closest('.searched-user-container').id);
-		// document.getElementById(tripID).remove();
-		deleteTrip(tripID, foundUserID);
+		const foundTrip = { id: Number(event.target.closest('.trip-card').id) }
+		deleteTrip(foundTrip, foundUserID);
 	}
 }
 
-function changeTripStatus(tripID, foundUserID) {
-	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			id: tripID,
-			status: 'approved',
-		})
-	})
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(error => console.log(error))
+function changeTripStatus(givenTrip, foundUserID) {
+	fetchCall.approveTrip(givenTrip)
 		.then(() => updateTripData(foundUserID))
 }
 
-function deleteTrip(tripID, foundUserID) {
-	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			id: tripID,
-		})
-	})
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(error => console.log(error))
+function deleteTrip(givenTrip, foundUserID) {
+	fetchCall.deleteTrip(givenTrip)
 		.then(() => updateTripData(foundUserID))
 }
 
-function submitRequest(destID, travelerInput, chosenDate, durationInput) {
-	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			id: Date.now(),
-			userID: user.id,
-			destinationID: destID,
-			travelers: travelerInput,
-			date: chosenDate,
-			duration: durationInput,
-			status: 'pending',
-			suggestedActivities: []
-		})
-	})
-		.then(response => response.json())
-		.then(data => console.log(data))
-		.catch(error => console.log(error))
-		.then(() => updatePending(destinations, destID, durationInput, travelerInput));
+function submitRequest(givenTrip) {
+	fetchCall.postBookingRequest(givenTrip)
+		.then(() => updatePending(destinations, givenTrip));
 }
 
-function updatePending(destinations, destID, durationInput, travelerInput) {
-	const tripCost = user.findTripCost(destinations, destID, durationInput, travelerInput);
+function updatePending(destinations, givenTrip) {
+	const tripCost = user.findTripCost(destinations, givenTrip.destinationID, givenTrip.duration, givenTrip.travelers);
 	document.querySelector('.estimated-cost').innerText = `Estimated cost: ${tripCost}`;
 	updateTripData();
 }
 
 function updateTripData(foundUserID) {
-	trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
-		.then(response => response.json())
-		.catch(error => console.log(error))
+	trips = fetchCall.getTrips()
 	
 	return Promise.resolve(trips)	
 		.then(response => {
@@ -194,24 +160,17 @@ function fetchDate() {
   const yyyy = currentDate.getFullYear();
 	today = yyyy + '/' + mm + '/' + dd;
 	document.querySelector('.today').innerText = `today: ${today}`;
+	fetchCall = new FetchCall();
 }
 
 function fetchLoginUser(event) {
   event.preventDefault();
   const loginUser = usernameInput.value;
-  const loginPwd = pwdInput.value;
-
-  allUsers = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers')
-    .then(response => response.json())
-    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message));
-
-  trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
-    .then(response => response.json())
-    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message));
-
-  destinations = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/destinations/destinations')
-    .then(response => response.json())
-    .catch(err => console.log('Alert, something\'s wrong with your endpoint!', err.message));
+	const loginPwd = pwdInput.value;
+	
+	allUsers = fetchCall.getTravelers();
+	trips = fetchCall.getTrips();
+	destinations = fetchCall.getDestinations();
 
   return Promise.all([allUsers, trips, destinations])
     .then(response => {
@@ -220,7 +179,8 @@ function fetchLoginUser(event) {
       allUsers = response[0].travelers.map(traveler => new Traveler(traveler, undefined, undefined, trips));
     })
     .then(() => loginHandler(loginUser, loginPwd))
-    .catch(error => console.log(error))
+		.catch(error => console.log(error))
+		.then(console.log(allUsers, trips, destinations))
 }
 
 function loginHandler(loginUser, loginPwd) {
