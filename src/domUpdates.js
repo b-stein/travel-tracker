@@ -1,14 +1,10 @@
 let domUpdates = {
   displayAgentDash(agent, destinations, today) {
-		this.querySelector('.login-wrapper').classList.add('hide');
-		this.querySelector('.agent-search').classList.add('hide');
-		this.querySelector('.agent-dash').classList.remove('hide');
-		this.querySelector('.search').classList.remove('hide');
+		document.querySelector('.login-wrapper').classList.add('hide');
+		document.querySelector('.agent-search').classList.add('hide');
+		document.querySelector('.agent-dash').classList.remove('hide');
+		document.querySelector('.search').classList.remove('hide');
 		this.displayAgentInfo(agent, destinations, today);
-	},
-	
-	querySelector(cssSelector) {
-		return document.querySelector(cssSelector);
 	},
 
   displayUserDash(user, destinations, today) {

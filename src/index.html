@@ -19,23 +19,23 @@
 					<img src="images/search.png" class='icon' alt="search button">
 				</button>
 			</form>
-			<div class='today'>today: </div>
+			<p class='today'>today: </p>
 			<button class='book-trip hide' type='button' name='book trip button'>Book Trip</button>
 		</header>
 
 	<main>
 		<section class='login-wrapper'>
 		<form class='login'>
-			<div class='login-container'>
-				<div class='form-input'>
+			<section class='login-container'>
+				<section class='form-input'>
 					<label for="username">Username:</label>
 					<input type='text' class='input username-input' placeholder='Enter Username' name='username' required>
-				</div>
-				<div class='form-input'>
+				</section>
+				<section class='form-input'>
 					<label for='psw'>Password:</label>
 					<input type='password' class='input pwd-input' placeholder='Enter Password' name='psw' required>
-				</div>
-			</div>
+				</section>
+			</section>
 
 			<button type="submit" class='login-btn'>Login</button>
 			<p class='login-error'></p>
@@ -47,7 +47,7 @@
 			<button id="exit-form-btn">X</button>
 			<form id='booking-form'>
 				<h3 id="request-trip-title">Request A Trip</h3>
-				<div class='form-input'>
+				<section class='form-input'>
 					<label for="destination">Destination:</label>
 					<select class="chosen-destination" name="destinations">
 						<option value="Lima, Peru">Lima, Peru</option>
@@ -101,8 +101,8 @@
 						<option value="Castries, St Lucia">Castries, St Lucia</option>
 						<option value="Hobart, Tasmania">Hobart, Tasmania</option>
 					</select>
-				</div>
-				<div class='form-input'>
+				</section>
+				<section class='form-input'>
 					<label for="date-picker">Date:</label>
 					<input type="text" class="date-picker" name="datefilter" placeholder="click for calendar" value="" />
 					<script type="text/javascript">
@@ -124,19 +124,19 @@
 						});
 					});
 					</script>
-				</div>
-				<div class='form-input'>
+				</section>
+				<section class='form-input'>
 					<label for="duration">Duration:</label>
 					<input type='text' class='input duration-input' placeholder='in days' name='duration' required>
-				</div>
-				<div class='form-input'>
+				</section>
+				<section class='form-input'>
 					<label for="travelers">Travelers:</label>
 					<input type='text' class='input traveler-input' placeholder='how many people are going?' name='travelers' required>
-				</div>
-				<div class='btn-container'>
+				</section>
+				<section class='btn-container'>
 					<button type="submit" class='form-btn clear-form'>Clear Form</button>
 					<button type="submit" class='form-btn btn-warning'>Submit Request</button>
-				</div>
+				</section>
 			</form>
 			<section class='estimated-cost'></section>
 		</section>
@@ -146,32 +146,32 @@
 		<section class='traveler-dash hide'>
 			<h1 class='welcome-banner'>Welcome user!</h1>
 			<p class='yr-trip-cost'>Spent on trips this year:</p>
-			<div class='modal trips current-trips'>Current Trips
+			<section class='modal trips current-trips'>Current Trips
 				<section class='current-trips-container trip-container'></section>
-			</div>
-			<div class='modal trips upcoming-trips'>Upcoming Trips
+			</section>
+			<section class='modal trips upcoming-trips'>Upcoming Trips
 				<section class='upcoming-trips-container trip-container'></section>
-			</div>
-			<div class='modal trips past-trips'>Past Trips
+			</section>
+			<section class='modal trips past-trips'>Past Trips
 				<section class='past-trips-container trip-container'></section>
-			</div>
-			<div class='modal trips pending-trips'>Pending Trips
+			</section>
+			<section class='modal trips pending-trips'>Pending Trips
 				<section class='pending-trips-container trip-container'></section>
-			</div>
+			</section>
 		</section>
 
 		<section class='agent-dash hide'>
-			<div class='modal income-gained'>Revenue
+			<section class='modal income-gained'>Revenue
 				<p class='revenue'>This years revenue:</p>
-			</div>
-			<div class='modal trip-requests'>Trip Requests
+			</section>
+			<section class='modal trip-requests'>Trip Requests
 				<section class='request-container trip-container'>
 				</section>
-			</div>
-			<div class='modal current-travelers'>Active Trips Today
+			</section>
+			<section class='modal current-travelers'>Active Trips Today
 				<section class='active-trips-container trip-container'>
 				</section>
-			</div>
+			</section>
 		</section>
 
 		<section class='agent-search hide'>

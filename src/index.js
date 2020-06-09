@@ -161,7 +161,7 @@ function updateTripData(foundUserID) {
 		.then(response => response.json())
 		.catch(error => console.log(error))
 	
-	return Promise.resolve(trips)
+	return Promise.resolve(trips)	
 		.then(response => {
 			trips = response.trips;
 			if (user !== undefined) {

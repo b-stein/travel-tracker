@@ -64,7 +64,7 @@ describe('Agent', () => {
 			"travelers": 2,
 			"date": "2020/09/15",
 			"duration": 8,
-			"status": "pending",
+			"status": "approved",
 			"suggestedActivities": []
 		}]
 		agent = new Agent('agency', 'travel2020', trips);
@@ -99,13 +99,13 @@ describe('Agent', () => {
 	it('findPendingTrips method should find all pending trips', () => {
 		agent.findPendingTrips();
 
-		expect(agent.pendingTrips).to.deep.equal([trips[0], trips[3], trips[5]]);
+		expect(agent.pendingTrips).to.deep.equal([trips[0], trips[3]]);
 	})
 
 	it('if findPendingTrips method is invoked with an argument, the method will still run properly', () => {
 		agent.findPendingTrips(today);
 
-		expect(agent.pendingTrips).to.deep.equal([trips[0], trips[3], trips[5]]);
+		expect(agent.pendingTrips).to.deep.equal([trips[0], trips[3]]);
 	})
 
 	it('findYearRevenue method should return the 10% gained by the agency for the calendar year', () => {
@@ -117,7 +117,7 @@ describe('Agent', () => {
 	})
 
 	it('findActiveTrips method should find all trips active today', () => {
-		agent.findActiveTrips("2020/09/15");
+		agent.findActiveTrips("2020/09/16");
 
 		expect(agent.activeTrips).to.deep.equal([trips[5]]);
 	})
