@@ -361,11 +361,14 @@ h3 {
   }
 }
 
-.form-btn {
-	margin-top: 30px;
-	margin: 5% 40% 2% 40%;
-	height: 36px;
-	width: 91px;
+.btn-container {
+	display: flex;
+  justify-content: space-evenly;
+	.form-btn {
+		margin-top: 25px;
+		height: 36px;
+		width: 91px;
+	}
 }
 
 .trip-information {
