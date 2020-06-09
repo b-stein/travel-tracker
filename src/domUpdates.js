@@ -155,6 +155,26 @@ let domUpdates = {
 		})
 	},
 
+	displayAdminChange(foundUser, today, destinations) {
+		console.log(foundUser.trips)
+		const yearPurchases = foundUser.findYearTripCost(today, destinations);
+		let userPendingTrips = this.interpolatePendingTrips(foundUser.pendingTrips, destinations);
+		let userUpcomingTrips = this.interpolateUpcomingTrips(foundUser.upcomingTrips, destinations);
+		let userActiveTrips = this.interpolateOtherTrips(foundUser.activeTrips, 'active', destinations);
+		let userPastTrips = this.interpolateOtherTrips(foundUser.pastTrips, 'past', destinations);
+
+		let userSection = `
+		<h3>${foundUser.name}</h3>
+		<h4>${today.substring(0, 4)} Travel Tracker expenses: ${yearPurchases}</h4>
+		<div class='user-trips-container'>
+			${userPendingTrips}
+			${userUpcomingTrips}
+			${userActiveTrips}
+			${userPastTrips}
+		</div>`
+		document.getElementById(foundUser.id).insertAdjacentHTML('beforeend', userSection);
+	},
+
 	interpolatePendingTrips(givenArray, destinations) {
 		return givenArray.map(trip => {
 			let foundDestSpec = destinations.find(dest => dest.id === trip.destinationID);
@@ -170,8 +190,8 @@ let domUpdates = {
 				</div>
 				<div class='card-bottom'>
 					<h4>Date: ${trip.date}, Duration: ${trip.duration} days</h4>
-					<button type="approve" class='approve-btn'>Approve</button>
-					<button type="deny" class='deny-btn'>Deny</button>
+					<button type="approve" class='approve-btn search-view'>Approve</button>
+					<button type="deny" class='deny-btn search-view'>Deny</button>
 				</div>
 			</div>`
 		})

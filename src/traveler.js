@@ -3,7 +3,7 @@ import User from './user';
 class Traveler extends User {
 	constructor(data, username = undefined, pwd = undefined, trips) {
 		super(username, pwd, true);
-		this.id = data.id;
+		this.id = data === undefined ? undefined : data.id;
 		this.name = data.name;
 		this.travelerType = data.travelerType;
 		this.trips = trips.filter(trip => trip.userID === this.id);

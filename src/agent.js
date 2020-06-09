@@ -6,11 +6,18 @@ class Agent extends User {
 		this.id = 1;
 		this.userTrips = trips;
 		this.pendingTrips = [];
+		this.upcomingTrips = [];
 		this.activeTrips = [];
 	}
 
 	findPendingTrips() {
 		this.pendingTrips = this.userTrips.filter(trip => trip.status === 'pending');
+	}
+
+	findUpcomingTrips(today) {
+		const upcomingTrips = this.userTrips.filter(trip => trip.date > today);
+
+		this.upcomingTrips = upcomingTrips.filter(trip => trip.status === 'approved');
 	}
 	
 	findYearRevenue(today, destinations) {

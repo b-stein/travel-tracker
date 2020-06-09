@@ -10,6 +10,7 @@ import domUpdates from './domUpdates';
 
 const usernameInput = document.querySelector('.username-input');
 const pwdInput = document.querySelector('.pwd-input');
+const agentDash = document.querySelector('.agent-dash');
 
 let today;
 let user;
@@ -35,12 +36,11 @@ function searchUsers(event) {
 	const searchedResults = []
 	allUsers.forEach(user => {
 		if (user.name.includes(search)) {
-			const userSpec = new Traveler(user, undefined, undefined, trips);
-			userSpec.findActiveTrips(today);
-			userSpec.findUpcomingTrips(today);
-			userSpec.findPastTrips(today);
-			userSpec.findPendingTrips();
-			searchedResults.push(userSpec);
+			user.findActiveTrips(today);
+			user.findUpcomingTrips(today);
+			user.findPastTrips(today);
+			user.findPendingTrips();
+			searchedResults.push(user);
 		}
 	})
 	domUpdates.displaySearchResults(searchedResults, today, destinations);
@@ -66,13 +66,33 @@ function clickHandler(trips, destinations, allUsers) {
 		const tripID = Number(event.target.closest('.trip-card').id);
 		changeTripStatus(tripID);
 	}
+
+	// split event target classname into an array on empty spaces
+	// check with .includes for the string your looking for
+	// .split(' ')
+	if (event.target.className === 'approve-btn search-view') {
+		const tripID = Number(event.target.closest('.trip-card').id);
+		const userContainer = Number(event.target.closest('.searched-user-container').id);
+		changeTripStatus(tripID, userContainer, event);
+	}
 	if (event.target.className === 'deny-btn') {
 		const tripID = Number(event.target.closest('.trip-card').id);
 		deleteTrip(tripID);
 	}
+	if (event.target.className === 'deny-btn search-view') {
+		console.log('click');
+		const tripID = Number(event.target.closest('.trip-card').id);
+		const userContainer = Number(event.target.closest('.searched-user-container').id);
+		changeTripStatus(tripID, userContainer, event);
+	}
+	if (event.target.className === 'delete-btn') {
+		const tripID = Number(event.target.closest('.trip-card').id);
+		const userContainer = Number(event.target.closest('.searched-user-container').id);
+		deleteTrip(tripID, userContainer, event);
+	}
 }
 
-function changeTripStatus(tripID) {
+function changeTripStatus(tripID, event) {
 	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
 		method: 'POST',
 		headers: {
@@ -86,10 +106,10 @@ function changeTripStatus(tripID) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.log(error))
-		.then(() => updateTripData())
+		.then(() => updateTripData(event))
 }
 
-function deleteTrip(tripID) {
+function deleteTrip(tripID, foundUserContainer) {
 	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
 		method: 'DELETE',
 		headers: {
@@ -102,7 +122,7 @@ function deleteTrip(tripID) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.log(error))
-		.then(() => updateTripData())
+		.then(() => updateTripData(foundUserContainer))
 }
 
 function submitRequest(destID, travelerInput, chosenDate, durationInput) {
@@ -134,7 +154,7 @@ function updatePending(destinations, destID, durationInput, travelerInput) {
 	updateTripData();
 }
 
-function updateTripData() {
+function updateTripData(foundUserContainer, event) {
 	trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
 		.then(response => response.json())
 		.catch(error => console.log(error))
@@ -147,9 +167,19 @@ function updateTripData() {
 				user.findPendingTrips();
 				document.querySelector('.pending-trips-container').innerHTML = '';
 				domUpdates.displayUserInfo(user, destinations, today);
+			} else if (agentDash.className === 'agent-dash hide') {
+				const foundUser = new Traveler(allUsers[foundUserContainer - 1], undefined, undefined, trips);
+				console.log(foundUser)
+				console.log(foundUser.trips)
+				foundUser.findPendingTrips();
+				foundUser.findUpcomingTrips(today);
+				document.getElementById(foundUserContainer).innerHTML = '';
+				domUpdates.displayAdminChange(foundUser, today, destinations);
 			} else {
-				agent = new Agent('agency', 'traveler2020', trips);
+				console.log(agent.pendingTrips);
+				agent = new Agent('agency', 'travel2020', trips);
 				agent.findPendingTrips();
+				agent.findUpcomingTrips(today);
 				document.querySelector('.request-container').innerHTML = '';
 				domUpdates.displayAgentInfo(agent, destinations, today);
 			}
@@ -184,9 +214,9 @@ function fetchLoginUser(event) {
 
   return Promise.all([allUsers, trips, destinations])
     .then(response => {
-      allUsers = response[0].travelers;
-      trips = response[1].trips;
-      destinations = response[2].destinations;
+			destinations = response[2].destinations;
+			trips = response[1].trips;
+      allUsers = response[0].travelers.map(traveler => new Traveler(traveler, undefined, undefined, trips));
     })
     .then(() => loginHandler(loginUser, loginPwd))
     .catch(error => console.log(error))
