@@ -137,16 +137,12 @@ function updateTripData(foundUserID) {
 				domUpdates.displayUserInfo(user, destinations, today);
 			} else if (agentDash.className === 'agent-dash hide') {
 				const foundUser = new Traveler(allUsers[foundUserID - 1], undefined, undefined, trips);
-				foundUser.findPendingTrips();
-				foundUser.findUpcomingTrips(today);
-				foundUser.findActiveTrips(today);
-				foundUser.findPastTrips(today);
+				foundUser.updateAllProperties(today);
 				document.getElementById(foundUserID).innerHTML = '';
 				domUpdates.displayAdminChange(foundUser, today, destinations);
 			} else {
 				agent = new Agent('agency', 'travel2020', trips);
-				agent.findPendingTrips();
-				agent.findUpcomingTrips(today);
+				agent.updateProperties(today);
 				document.querySelector('.request-container').innerHTML = '';
 				domUpdates.displayAgentInfo(agent, destinations, today);
 			}
@@ -189,22 +185,14 @@ function loginHandler(loginUser, loginPwd) {
 	
   if (login.authenticated === true && login.agency === true) {
 		agent = new Agent(loginUser, loginPwd, trips);
-		agent.findPendingTrips();
-		agent.findActiveTrips(today);
+		agent.updateProperties(today);
     domUpdates.displayAgentDash(agent, destinations, today);
   } else if (login.authenticated === true && login.agency === false) {
 		if (isNaN(Number(loginUser.slice(-2)))) {
 			usernameID = '0' + loginUser.slice(-1);
-		} else {
-			usernameID = loginUser.slice(-2);
-		}
+		} else { usernameID = loginUser.slice(-2) }
     user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd, trips);
-		user.findActiveTrips(today);
-		user.findUpcomingTrips(today);
-		user.findPastTrips(today);
-		user.findPendingTrips();
+		user.updateAllProperties(today);
 		domUpdates.displayUserDash(user, destinations, today);
-  } else {
-		domUpdates.displayErrorLoginMsg();
-	}
+  } else { domUpdates.displayErrorLoginMsg() }
 }

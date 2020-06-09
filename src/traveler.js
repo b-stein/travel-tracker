@@ -13,6 +13,13 @@ class Traveler extends User {
 		this.pendingTrips = [];
 	}
 
+	updateAllProperties(today) {
+		this.findActiveTrips(today);
+		this.findUpcomingTrips(today);
+		this.findPastTrips(today);
+		this.findPendingTrips();
+	}
+
 	findActiveTrips(today) {
 		const activeTrips = this.trips.filter(trip => {
 			const endDate = this.addDays(trip.date, trip.duration);

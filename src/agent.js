@@ -10,6 +10,11 @@ class Agent extends User {
 		this.activeTrips = [];
 	}
 
+	updateProperties(today) {
+		this.findPendingTrips();
+		this.findActiveTrips(today);
+	}
+
 	findPendingTrips() {
 		this.pendingTrips = this.userTrips.filter(trip => trip.status === 'pending');
 	}
