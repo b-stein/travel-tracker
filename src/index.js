@@ -66,14 +66,13 @@ function clickHandler(trips, destinations, allUsers) {
 		const tripID = Number(event.target.closest('.trip-card').id);
 		changeTripStatus(tripID);
 	}
-
 	// split event target classname into an array on empty spaces
 	// check with .includes for the string your looking for
 	// .split(' ')
 	if (event.target.className === 'approve-btn search-view') {
 		const tripID = Number(event.target.closest('.trip-card').id);
 		const userContainer = Number(event.target.closest('.searched-user-container').id);
-		changeTripStatus(tripID, userContainer, event);
+		changeTripStatus(tripID, userContainer);
 	}
 	if (event.target.className === 'deny-btn') {
 		const tripID = Number(event.target.closest('.trip-card').id);
@@ -83,16 +82,17 @@ function clickHandler(trips, destinations, allUsers) {
 		console.log('click');
 		const tripID = Number(event.target.closest('.trip-card').id);
 		const userContainer = Number(event.target.closest('.searched-user-container').id);
-		changeTripStatus(tripID, userContainer, event);
+		changeTripStatus(tripID, userContainer);
 	}
 	if (event.target.className === 'delete-btn') {
 		const tripID = Number(event.target.closest('.trip-card').id);
 		const userContainer = Number(event.target.closest('.searched-user-container').id);
-		deleteTrip(tripID, userContainer, event);
+		document.getElementById(tripID).remove();
+		deleteTrip(tripID, userContainer);
 	}
 }
 
-function changeTripStatus(tripID, event) {
+function changeTripStatus(tripID) {
 	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
 		method: 'POST',
 		headers: {
@@ -106,7 +106,7 @@ function changeTripStatus(tripID, event) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.log(error))
-		.then(() => updateTripData(event))
+		.then(() => updateTripData())
 }
 
 function deleteTrip(tripID, foundUserContainer) {
@@ -154,7 +154,7 @@ function updatePending(destinations, destID, durationInput, travelerInput) {
 	updateTripData();
 }
 
-function updateTripData(foundUserContainer, event) {
+function updateTripData(foundUserContainer) {
 	trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
 		.then(response => response.json())
 		.catch(error => console.log(error))
@@ -169,10 +169,8 @@ function updateTripData(foundUserContainer, event) {
 				domUpdates.displayUserInfo(user, destinations, today);
 			} else if (agentDash.className === 'agent-dash hide') {
 				const foundUser = new Traveler(allUsers[foundUserContainer - 1], undefined, undefined, trips);
-				console.log(foundUser)
-				console.log(foundUser.trips)
 				foundUser.findPendingTrips();
-				foundUser.findUpcomingTrips(today);
+				// foundUser.findUpcomingTrips(today);
 				document.getElementById(foundUserContainer).innerHTML = '';
 				domUpdates.displayAdminChange(foundUser, today, destinations);
 			} else {

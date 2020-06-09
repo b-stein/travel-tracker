@@ -157,6 +157,7 @@ let domUpdates = {
 
 	displayAdminChange(foundUser, today, destinations) {
 		console.log(foundUser.trips)
+		debugger;
 		const yearPurchases = foundUser.findYearTripCost(today, destinations);
 		let userPendingTrips = this.interpolatePendingTrips(foundUser.pendingTrips, destinations);
 		let userUpcomingTrips = this.interpolateUpcomingTrips(foundUser.upcomingTrips, destinations);
