@@ -58,6 +58,7 @@ h1 {
 
 .nav-btn {
 	margin-left: 10px;
+	border: 0;
 }
 
 button img {
@@ -159,6 +160,9 @@ input {
 	width: 100vw;
 	height: 80vh;
 	margin-top: 2%;
+	p {
+		font-weight: normal;
+	}
 }
 
 .modal {
@@ -181,6 +185,7 @@ input {
 	border: 2px solid $accent-yellow;
 	border-radius: 7px;
 	cursor: pointer;
+	color: white;
 	min-height: 150px;
 	max-height: 240px;
 	margin: 5px 11px;
@@ -288,6 +293,7 @@ input {
 	overflow-x: auto;
 	overflow-y: hidden;
 	height: 261px;
+	color: $accent-blue;
 }
 
 .post-to-trips {
@@ -355,11 +361,14 @@ h3 {
   }
 }
 
-.form-btn {
-	margin-top: 30px;
-	margin: 5% 40% 2% 40%;
-	height: 36px;
-	width: 91px;
+.btn-container {
+	display: flex;
+  justify-content: space-evenly;
+	.form-btn {
+		margin-top: 25px;
+		height: 36px;
+		width: 91px;
+	}
 }
 
 .trip-information {
@@ -454,4 +463,8 @@ h3 {
 
 .back-btn {
 	margin: 5px;
+}
+
+.no-result {
+	color: $accent-blue;
 }

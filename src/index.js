@@ -10,6 +10,7 @@ import domUpdates from './domUpdates';
 
 const usernameInput = document.querySelector('.username-input');
 const pwdInput = document.querySelector('.pwd-input');
+const agentDash = document.querySelector('.agent-dash');
 
 let today;
 let user;
@@ -20,29 +21,30 @@ let trips;
 let destinations;
 
 window.addEventListener('load', fetchDate);
-document.querySelector('.login-btn').addEventListener('click', (e) => fetchLoginUser(e));
+document.querySelector('.login-btn').addEventListener('click', () => fetchLoginUser(event));
 document.querySelector('.book-trip').addEventListener('click', domUpdates.displayReqForm);
 document.getElementById('exit-form-btn').addEventListener('click', domUpdates.exitForm);
-document.querySelector('.form-btn').addEventListener('click', (e) => findInputs(e, destinations));
+document.querySelector('.form-btn').addEventListener('click', () => findInputs(event, destinations));
+document.querySelector('.clear-form').addEventListener('click', () => domUpdates.clearForm(event));
 document.querySelector('main').addEventListener('click', () => clickHandler(trips, destinations, allUsers));
-document.querySelector('.search-btn').addEventListener('click', (e) => searchUsers(e));
-document.getElementById('search-mag-btn').addEventListener('submit', (e) => searchUsers(e));
+document.querySelector('.search-btn').addEventListener('click', () => searchUsers(event));
+document.getElementById('search').addEventListener('submit', () => searchUsers(event));
 document.querySelector('.back-btn').addEventListener('click', () => domUpdates.displayAgentDash(agent, destinations, today));
 
 function searchUsers(event) {
 	event.preventDefault();
-	const search = document.getElementById('search-input').value;
+	const search = document.getElementById('search-input').value.toLowerCase();
 	const searchedResults = []
 	allUsers.forEach(user => {
-		if (user.name.includes(search)) {
-			const userSpec = new Traveler(user, undefined, undefined, trips);
-			userSpec.findActiveTrips(today);
-			userSpec.findUpcomingTrips(today);
-			userSpec.findPastTrips(today);
-			userSpec.findPendingTrips();
-			searchedResults.push(userSpec);
+		if (user.name.toLowerCase().includes(search)) {
+			user.findActiveTrips(today);
+			user.findUpcomingTrips(today);
+			user.findPastTrips(today);
+			user.findPendingTrips();
+			searchedResults.push(user);
 		}
 	})
+	document.querySelector('.search-results-container').innerHTML = '';
 	domUpdates.displaySearchResults(searchedResults, today, destinations);
 }
 
@@ -66,13 +68,33 @@ function clickHandler(trips, destinations, allUsers) {
 		const tripID = Number(event.target.closest('.trip-card').id);
 		changeTripStatus(tripID);
 	}
+	// split event target classname into an array on empty spaces
+	// check with .includes for the string your looking for
+	// .split(' ')
+	if (event.target.className === 'approve-btn search-view') {
+		const tripID = Number(event.target.closest('.trip-card').id);
+		const foundUserID = Number(event.target.closest('.searched-user-container').id);
+		changeTripStatus(tripID, foundUserID);
+	}
 	if (event.target.className === 'deny-btn') {
 		const tripID = Number(event.target.closest('.trip-card').id);
 		deleteTrip(tripID);
 	}
+	if (event.target.className === 'deny-btn search-view') {
+		console.log('click');
+		const tripID = Number(event.target.closest('.trip-card').id);
+		const foundUserID = Number(event.target.closest('.searched-user-container').id);
+		changeTripStatus(tripID, foundUserID);
+	}
+	if (event.target.className === 'delete-btn') {
+		const tripID = Number(event.target.closest('.trip-card').id);
+		const foundUserID = Number(event.target.closest('.searched-user-container').id);
+		// document.getElementById(tripID).remove();
+		deleteTrip(tripID, foundUserID);
+	}
 }
 
-function changeTripStatus(tripID) {
+function changeTripStatus(tripID, foundUserID) {
 	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/updateTrip', {
 		method: 'POST',
 		headers: {
@@ -86,10 +108,10 @@ function changeTripStatus(tripID) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.log(error))
-		.then(() => updateTripData())
+		.then(() => updateTripData(foundUserID))
 }
 
-function deleteTrip(tripID) {
+function deleteTrip(tripID, foundUserID) {
 	fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips', {
 		method: 'DELETE',
 		headers: {
@@ -102,7 +124,7 @@ function deleteTrip(tripID) {
 		.then(response => response.json())
 		.then(data => console.log(data))
 		.catch(error => console.log(error))
-		.then(() => updateTripData())
+		.then(() => updateTripData(foundUserID))
 }
 
 function submitRequest(destID, travelerInput, chosenDate, durationInput) {
@@ -134,7 +156,7 @@ function updatePending(destinations, destID, durationInput, travelerInput) {
 	updateTripData();
 }
 
-function updateTripData() {
+function updateTripData(foundUserID) {
 	trips = fetch('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/trips/trips')
 		.then(response => response.json())
 		.catch(error => console.log(error))
@@ -147,9 +169,18 @@ function updateTripData() {
 				user.findPendingTrips();
 				document.querySelector('.pending-trips-container').innerHTML = '';
 				domUpdates.displayUserInfo(user, destinations, today);
+			} else if (agentDash.className === 'agent-dash hide') {
+				const foundUser = new Traveler(allUsers[foundUserID - 1], undefined, undefined, trips);
+				foundUser.findPendingTrips();
+				foundUser.findUpcomingTrips(today);
+				foundUser.findActiveTrips(today);
+				foundUser.findPastTrips(today);
+				document.getElementById(foundUserID).innerHTML = '';
+				domUpdates.displayAdminChange(foundUser, today, destinations);
 			} else {
-				agent = new Agent('agency', 'traveler2020', trips);
+				agent = new Agent('agency', 'travel2020', trips);
 				agent.findPendingTrips();
+				agent.findUpcomingTrips(today);
 				document.querySelector('.request-container').innerHTML = '';
 				domUpdates.displayAgentInfo(agent, destinations, today);
 			}
@@ -184,9 +215,9 @@ function fetchLoginUser(event) {
 
   return Promise.all([allUsers, trips, destinations])
     .then(response => {
-      allUsers = response[0].travelers;
-      trips = response[1].trips;
-      destinations = response[2].destinations;
+			destinations = response[2].destinations;
+			trips = response[1].trips;
+      allUsers = response[0].travelers.map(traveler => new Traveler(traveler, undefined, undefined, trips));
     })
     .then(() => loginHandler(loginUser, loginPwd))
     .catch(error => console.log(error))
