@@ -129,35 +129,47 @@ let domUpdates = {
 		document.getElementById('overlay').remove();
 	},
 
+	clearForm(event) {
+		event.preventDefault()
+		document.querySelector('.chosen-destination').value = '';
+		document.querySelector('.traveler-input').value = '';
+		document.querySelector('.date-picker').value = '';
+		document.querySelector('.duration-input').value = '';
+		document.querySelector('.estimated-cost').innerText = '';
+	},
+
 	displaySearchResults(searchedResults, today, destinations) {
 		document.querySelector('.agent-dash').classList.add('hide');
 		document.querySelector('.agent-search').classList.remove('hide');
-	
-		searchedResults.forEach(userResult => {
-			const yearPurchases = userResult.findYearTripCost(today, destinations);
-			let userPendingTrips = this.interpolatePendingTrips(userResult.pendingTrips, destinations);
-			let userUpcomingTrips = this.interpolateUpcomingTrips(userResult.upcomingTrips, destinations);
-			let userActiveTrips = this.interpolateOtherTrips(userResult.activeTrips, 'active', destinations);
-			let userPastTrips = this.interpolateOtherTrips(userResult.pastTrips, 'past', destinations);
+		
+		if (searchedResults.length === 0) {
+			let userSection = `<p class='no-result'>No results</p>`
+			document.querySelector('.search-results-container').insertAdjacentHTML('beforeend', userSection);
+		} else {
+			searchedResults.forEach(userResult => {
+				const yearPurchases = userResult.findYearTripCost(today, destinations);
+				let userPendingTrips = this.interpolatePendingTrips(userResult.pendingTrips, destinations);
+				let userUpcomingTrips = this.interpolateUpcomingTrips(userResult.upcomingTrips, destinations);
+				let userActiveTrips = this.interpolateOtherTrips(userResult.activeTrips, 'active', destinations);
+				let userPastTrips = this.interpolateOtherTrips(userResult.pastTrips, 'past', destinations);
 
-			let userSection = `
-			<section class='searched-user-container modal' id=${userResult.id}>
-				<h3>${userResult.name}</h3>
-				<h4>${today.substring(0, 4)} Travel Tracker expenses: ${yearPurchases}</h4>
-				<div class='user-trips-container'>
-					${userPendingTrips}
-					${userUpcomingTrips}
-					${userActiveTrips}
-					${userPastTrips}
-				</div>
-			</section>`;
-			document.querySelector('.agent-search').insertAdjacentHTML('beforeend', userSection);
-		})
+				let userSection = `
+				<section class='searched-user-container modal' id=${userResult.id}>
+					<h3>${userResult.name}</h3>
+					<h4>${today.substring(0, 4)} Travel Tracker expenses: ${yearPurchases}</h4>
+					<div class='user-trips-container'>
+						${userPendingTrips}
+						${userUpcomingTrips}
+						${userActiveTrips}
+						${userPastTrips}
+					</div>
+				</section>`;
+				document.querySelector('.search-results-container').insertAdjacentHTML('beforeend', userSection);
+			})
+		}
 	},
 
 	displayAdminChange(foundUser, today, destinations) {
-		console.log(foundUser.trips)
-		debugger;
 		const yearPurchases = foundUser.findYearTripCost(today, destinations);
 		let userPendingTrips = this.interpolatePendingTrips(foundUser.pendingTrips, destinations);
 		let userUpcomingTrips = this.interpolateUpcomingTrips(foundUser.upcomingTrips, destinations);
