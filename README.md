@@ -42,6 +42,10 @@ In both cases, use the password `travel2020`.
 
 ![2020-06-09 20 39 49](https://user-images.githubusercontent.com/59381432/84221922-89616f80-aa93-11ea-9708-7b2546636900.gif)
 
+![2020-06-09 20 40 33](https://user-images.githubusercontent.com/59381432/84221957-9b431280-aa93-11ea-9ee9-ce2ce079bc7c.gif)
+
+
+
 ### Wins
 - Finishing all application functionality with a relatively clean, organized code base.
 - Implementing inheritance in classes, along with using a class for all API fetch calls.
