@@ -6,7 +6,6 @@ import destinations from './destinations-data';
 import trips from './trips';
 
 describe('Traveler', () => {
-	console.log(trips);
 	let user;
 	let felice = {
 		"id": 19,
