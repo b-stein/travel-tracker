@@ -109,7 +109,7 @@ describe('Agent', () => {
 	})
 
 	it('findYearRevenue method should return the 10% gained by the agency for the calendar year', () => {
-		expect(agent.findYearRevenue(today, destinations)).to.equal('$795.75');
+		expect(agent.findYearRevenue(today, destinations)).to.equal('$955.50');
 	})
 
 	it('if findYearRevenue is invoked with a missing arugment, an error should throw', () => {
