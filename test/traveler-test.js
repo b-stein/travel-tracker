@@ -72,7 +72,7 @@ describe('Traveler', () => {
 	it('should be able to find all upcoming trips based on todays date', () => {
 		user.findUpcomingTrips('2019/12/18');
 
-		expect(user.upcomingTrips).to.deep.equal([trips[2], trips[5]]);
+		expect(user.upcomingTrips).to.deep.equal([trips[2], trips[6]]);
 	})
 
 	it('if findUpcomingTrips method is invoked without an argument, it will return nothing', () => {
@@ -82,10 +82,10 @@ describe('Traveler', () => {
 	})
 
 	it('should be able to find all past trips based on todays date', () => {
-		user.findActiveTrips('2019/11/20')
-		user.findPastTrips('2019/11/20');
+		user.findActiveTrips('2020/01/19')
+		user.findPastTrips('2020/01/19');
 
-		expect(user.pastTrips).to.deep.equal([trips[1], trips[2], trips[3]]);
+		expect(user.pastTrips).to.deep.equal([trips[1], trips[6]]);
 	})
 
 	it('if findPastTrips method is invoked without an argument, it will return nothing', () => {
@@ -107,7 +107,7 @@ describe('Traveler', () => {
 	})
 
 	it('should be able to find the years trip expenses based off the date', () => {
-		expect(user.findYearTripCost('2020/09/24', destinations)).to.equal('$12650');
+		expect(user.findYearTripCost('2020/09/24', destinations)).to.equal('$10340');
 	})
 
 	it('if findYearTripCost method is invoked while missing an argument, an error should throw', () => {

@@ -17,21 +17,20 @@ describe('querySelector', () => {
 		"travelerType": "thrill-seeker"
 	};
 	let tripArray;
-	let cardHtml;
 
 	beforeEach(() => {
 		agent = new Agent('agent', 'travel2020', trips);
 		user = new Traveler(felice, 'traveler19', 'travel2020', trips);
 		tripArray = [trips[0]];
-		cardHtml = {};
 
 		global.document = {};
-		chai.spy.on(document, ['querySelector', 'insertAdjacentHTML'], () => {
+		chai.spy.on(document, ['querySelector'], () => {
 			return {
 				classList: {
 					add: () => {},
 					remove: () => {}
 				},
+				insertAdjacentHTML: () => {}
 			};
 		});
 	})
@@ -54,10 +53,12 @@ describe('querySelector', () => {
 		expect(document.querySelector).to.have.been.called.with('.login-wrapper');
 	})
 
-	it.skip('should spy on insertAdjacentHTML being called to the document', () => {
-		domUpdates.displayReqForm(document.querySelector('.revenue'), tripArray, destinations);
+	// it.skip('should spy on insertAdjacentHTML being called to the document', () => {
+	// 	let spy = chai.spy.on(domUpdates, 'displayReqForm', () => {});
+	// 	chai.spy.on(document, 'insertAdjacentHTML', () => {});
 
-		expect(document.insertAdjacentHTML).to.have.been.called(1);
-		expect(document.insertAdjacentHTML).to.have.been.called.with('beforeend', cardHtml);	
-	})
+	// 	domUpdates.generatePendRequests(document.querySelector('.revenue'), tripArray, destinations);
+
+	// 	expect(spy).to.have.been.called(1);
+	// })
 })

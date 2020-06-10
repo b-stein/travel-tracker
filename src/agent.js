@@ -10,7 +10,8 @@ class Agent extends User {
 		this.activeTrips = [];
 	}
 
-	updateProperties(today) {
+	updateProperties(today, trips) {
+		this.userTrips = trips;
 		this.findPendingTrips();
 		this.findActiveTrips(today);
 	}
@@ -35,19 +36,18 @@ class Agent extends User {
 
 		const confirmedYrTrips = yearTrips.filter(trip => trip.status === 'approved');
 
-		const revenueGained = confirmedYrTrips.reduce((sum, trip) => {
+		const incomeMade = (confirmedYrTrips.reduce((sum, trip) => {
 			const foundTripSpec = destinations.find(spot => spot.id === trip.destinationID);
 			let tripCost = (foundTripSpec.estimatedFlightCostPerPerson * trip.travelers) 
 				+ (foundTripSpec.estimatedLodgingCostPerDay * trip.duration);
 			sum += tripCost;
 
-			return sum / 10;
-		}, 0);
+			return sum;
+		}, 0) * .1).toFixed(2);
 
-		const roundedNum = Math.floor(revenueGained * 100) / 100;
-
-		return `$${roundedNum}`;
+		return `$${incomeMade}`;
 	}
+
 
 	findActiveTrips(today) {
 		const activeTrips = this.userTrips.filter(trip => {

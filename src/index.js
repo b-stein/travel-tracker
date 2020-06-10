@@ -33,37 +33,51 @@ document.querySelector('.search-btn').addEventListener('click', () => searchUser
 document.getElementById('search').addEventListener('submit', () => searchUsers(event));
 document.querySelector('.back-btn').addEventListener('click', () => domUpdates.displayAgentDash(agent, destinations, today));
 
-function searchUsers(event) {
-	event.preventDefault();
-	const search = document.getElementById('search-input').value.toLowerCase();
-	const searchedResults = []
-	allUsers.forEach(user => {
-		if (user.name.toLowerCase().includes(search)) {
-			user.findActiveTrips(today);
-			user.findUpcomingTrips(today);
-			user.findPastTrips(today);
-			user.findPendingTrips();
-			searchedResults.push(user);
-		}
-	})
-	document.querySelector('.search-results-container').innerHTML = '';
-	domUpdates.displaySearchResults(searchedResults, today, destinations);
+function fetchDate() {
+	const currentDate = new Date();
+  const dd = String(currentDate.getDate()).padStart(2, '0');
+  const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const yyyy = currentDate.getFullYear();
+	today = yyyy + '/' + mm + '/' + dd;
+	document.querySelector('.today').innerText = `today: ${today}`;
+	fetchCall = new FetchCall();
 }
 
-function findInputs(event, destinations) {
-	event.preventDefault();
-	const chosenDest = document.querySelector('.chosen-destination').value;
-	const tripRequest = {
-		id: Date.now(),
-		userID: user.id,
-		destinationID: destinations.find(dest => dest.destination === chosenDest).id,
-		travelers: Number(document.querySelector('.traveler-input').value),
-		date: document.querySelector('.date-picker').value,
-		duration: Number(document.querySelector('.duration-input').value),
-		status: 'pending',
-		suggestedActivities: []
-	}
-	submitRequest(tripRequest);
+function fetchLoginUser(event) {
+  event.preventDefault();
+  const loginUser = usernameInput.value;
+	const loginPwd = pwdInput.value;
+	
+	allUsers = fetchCall.getTravelers();
+	trips = fetchCall.getTrips();
+	destinations = fetchCall.getDestinations();
+
+  return Promise.all([allUsers, trips, destinations])
+    .then(response => {
+			destinations = response[2].destinations;
+			trips = response[1].trips;
+      allUsers = response[0].travelers.map(traveler => new Traveler(traveler, undefined, undefined, trips));
+    })
+    .then(() => loginHandler(loginUser, loginPwd))
+		.catch(error => console.log(error))
+}
+
+function loginHandler(loginUser, loginPwd) {
+  const login = new User(loginUser, loginPwd);
+  login.authenticate();
+	
+  if (login.authenticated === true && login.agency) {
+		agent = new Agent(loginUser, loginPwd, trips);
+		agent.updateProperties(today, trips);
+    domUpdates.displayAgentDash(agent, destinations, today);
+  } else if (login.authenticated === true && !login.agency) {
+		if (isNaN(Number(loginUser.slice(-2)))) {
+			usernameID = '0' + loginUser.slice(-1);
+		} else { usernameID = loginUser.slice(-2) }
+    user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd, trips);
+		user.updateAllProperties(today);
+		domUpdates.displayUserDash(user, destinations, today);
+  } else { domUpdates.displayErrorLoginMsg() }
 }
 
 function clickHandler(trips, destinations, allUsers) {
@@ -103,6 +117,22 @@ function clickHandler(trips, destinations, allUsers) {
 	}
 }
 
+function findInputs(event, destinations) {
+	event.preventDefault();
+	const chosenDest = document.querySelector('.chosen-destination').value;
+	const tripRequest = {
+		id: Date.now(),
+		userID: user.id,
+		destinationID: destinations.find(dest => dest.destination === chosenDest).id,
+		travelers: Number(document.querySelector('.traveler-input').value),
+		date: document.querySelector('.date-picker').value,
+		duration: Number(document.querySelector('.duration-input').value),
+		status: 'pending',
+		suggestedActivities: []
+	}
+	submitRequest(tripRequest);
+}
+
 function changeTripStatus(givenTrip, foundUserID) {
 	fetchCall.approveTrip(givenTrip)
 		.then(() => updateTripData(foundUserID))
@@ -138,61 +168,31 @@ function updateTripData(foundUserID) {
 			} else if (agentDash.className === 'agent-dash hide') {
 				const foundUser = new Traveler(allUsers[foundUserID - 1], undefined, undefined, trips);
 				foundUser.updateAllProperties(today);
+				agent.updateProperties(today, trips);
 				document.getElementById(foundUserID).innerHTML = '';
 				domUpdates.displayAdminChange(foundUser, today, destinations);
 			} else {
-				agent = new Agent('agency', 'travel2020', trips);
-				agent.updateProperties(today);
+				agent.updateProperties(today, trips);
+				document.querySelector('.revenue').innerText = '';
 				document.querySelector('.request-container').innerHTML = '';
 				domUpdates.displayAgentInfo(agent, destinations, today);
 			}
 		})
 }
 
-function fetchDate() {
-	const currentDate = new Date();
-  const dd = String(currentDate.getDate()).padStart(2, '0');
-  const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const yyyy = currentDate.getFullYear();
-	today = yyyy + '/' + mm + '/' + dd;
-	document.querySelector('.today').innerText = `today: ${today}`;
-	fetchCall = new FetchCall();
-}
-
-function fetchLoginUser(event) {
-  event.preventDefault();
-  const loginUser = usernameInput.value;
-	const loginPwd = pwdInput.value;
-	
-	allUsers = fetchCall.getTravelers();
-	trips = fetchCall.getTrips();
-	destinations = fetchCall.getDestinations();
-
-  return Promise.all([allUsers, trips, destinations])
-    .then(response => {
-			destinations = response[2].destinations;
-			trips = response[1].trips;
-      allUsers = response[0].travelers.map(traveler => new Traveler(traveler, undefined, undefined, trips));
-    })
-    .then(() => loginHandler(loginUser, loginPwd))
-		.catch(error => console.log(error))
-		.then(console.log(allUsers, trips, destinations))
-}
-
-function loginHandler(loginUser, loginPwd) {
-  const login = new User(loginUser, loginPwd);
-  login.authenticate();
-	
-  if (login.authenticated === true && login.agency === true) {
-		agent = new Agent(loginUser, loginPwd, trips);
-		agent.updateProperties(today);
-    domUpdates.displayAgentDash(agent, destinations, today);
-  } else if (login.authenticated === true && login.agency === false) {
-		if (isNaN(Number(loginUser.slice(-2)))) {
-			usernameID = '0' + loginUser.slice(-1);
-		} else { usernameID = loginUser.slice(-2) }
-    user = new Traveler(allUsers[usernameID - 1], loginUser, loginPwd, trips);
-		user.updateAllProperties(today);
-		domUpdates.displayUserDash(user, destinations, today);
-  } else { domUpdates.displayErrorLoginMsg() }
+function searchUsers(event) {
+	event.preventDefault();
+	const search = document.getElementById('search-input').value.toLowerCase();
+	const searchedResults = []
+	allUsers.forEach(user => {
+		if (user.name.toLowerCase().includes(search)) {
+			user.findActiveTrips(today);
+			user.findUpcomingTrips(today);
+			user.findPastTrips(today);
+			user.findPendingTrips();
+			searchedResults.push(user);
+		}
+	})
+	document.querySelector('.search-results-container').innerHTML = '';
+	domUpdates.displaySearchResults(searchedResults, today, destinations);
 }

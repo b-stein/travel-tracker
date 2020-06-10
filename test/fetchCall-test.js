@@ -8,36 +8,17 @@ describe('FetchCall', function() {
   let fetchCall;
   
   beforeEach(function() {
-    fetchCall = new FetchCall()
-    global.fetch = () => {
-      return Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({
-          x: true,
-        }),
-      }) 
-    }
-    chai.spy.on(fetchCall, 'fetch', () => { })
-    // window.fetch = {}
-    // let newPromise = new Promise() 
-    // do i need another chai spy for the fetch specifically? 
+    fetchCall = new FetchCall();
+    global.window = () => {};
+    chai.spy.on(window, 'fetch', () => { })
   })
   
-  it('should have a property of rootUrl', function() {
+  it('should have a property of rootURL', function() {
     expect(fetchCall.rootURL).to.equal('https://fe-apps.herokuapp.com/api/v1/travel-tracker/data');
-  });
+  })
   
-  it('should get all travelers', function() {
+  it.skip('should call to get all travelers', function() {
     fetchCall.getTravelers();
-    expect(fetch).to.have.been.called(1);
-    // expect(api.getTravelers()).to.equal(fetch(url).then(response => response.json()).catch(err => console.log(err.message)));
-  });
-
-  // it.skip('should get all trips', function() {
-  //   expect(fetchCall.getTrips()).to.equal(fetch(url).then(response => response.json()).catch(err => console.log(err.message)));
-  // });
-
-  // it.skip('should get all travel destinations', function() {
-  //   expect(fetchCall.getDestinations()).to.equal(fetch(url).then(response => response.json()).catch(err => console.log(err.message)));
-  // });
-});
+    expect(window.fetch).to.have.been.called(1);
+  })
+})

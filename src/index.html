@@ -12,12 +12,12 @@
   <body>
 		<header>
 			<h1 class='main-title'>Travel Tracker
-				<img src="images/map.png" alt="map icon" class="icon header-map-icon" role="logo"/>
+				<img src="images/map.png" alt="map icon" class="icon header-map-icon" role="img"/>
 			</h1>
 			<form id="search" class="search hide">
-				<input name="search for" id="search-input" type="text" autocomplete="off" placeholder="Search clients..." role="searchbox">
-				<button role="button" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button">
-					<img src="images/search.png" class='icon' alt="search button">
+				<input name="search for" aria-label="search-input" id="search-input" type="text" autocomplete="off" placeholder="Search clients..." role="searchbox">
+				<button role="button" aria-label="submit-search" class="nav-btn search-btn" id="search-mag-btn" type="button" name="search button">
+					<img src="images/search.png" class='icon' alt="search button" role="img">
 				</button>
 			</form>
 			<p class='today'>today: </p>
@@ -29,23 +29,23 @@
 		<form class='login'>
 			<section class='login-container'>
 				<section class='form-input'>
-					<label for="username">Username:</label>
-					<input type='text' class='input username-input' placeholder='Enter Username' name='username' required>
+					<label for="username input">Username:</label>
+					<input type='text' aria-label="username-input" class='input username-input' placeholder='Enter Username' name='username' required>
 				</section>
 				<section class='form-input'>
-					<label for='psw'>Password:</label>
-					<input type='password' class='input pwd-input' placeholder='Enter Password' name='psw' required>
+					<label for='password input'>Password:</label>
+					<input type='password' aria-label="password-input" class='input pwd-input' placeholder='Enter Password' name='psw' required>
 				</section>
 			</section>
 
-			<button type="submit" class='login-btn'>Login</button>
+			<button type="submit" aria-label="submit-login-form" class='login-btn'>Login</button>
 			<p class='login-error'></p>
 		</form>
-		<img src='images/bahamas.jpg' alt='airplane in bahamas' class='background-img' role='background image'/>
+		<img src='images/bahamas.jpg' alt='airplane in bahamas' class='background-img' role='img'/>
 		</section>
 
 		<section class='post-to-trips hide'>
-			<button id="exit-form-btn">X</button>
+			<button id="exit-form-btn" aria-label="exit-booking-form-button">X</button>
 			<form id='booking-form'>
 				<h3 id="request-trip-title">Request A Trip</h3>
 				<section class='form-input'>
@@ -105,7 +105,7 @@
 				</section>
 				<section class='form-input'>
 					<label for="date-picker">Date:</label>
-					<input type="text" class="date-picker" name="datefilter" placeholder="click for calendar" value="" />
+					<input type="text" aria-label="calendar-date-picker" class="date-picker" name="datefilter" placeholder="click for calendar" value="" />
 					<script type="text/javascript">
 					$(function() {
 						$('input[name="datefilter"]').daterangepicker({
@@ -128,15 +128,15 @@
 				</section>
 				<section class='form-input'>
 					<label for="duration">Duration:</label>
-					<input type='text' class='input duration-input' placeholder='in days' name='duration' required>
+					<input type='text' aria-label="trip-duration-input" class='input duration-input' placeholder='in days' name='duration' required>
 				</section>
 				<section class='form-input'>
 					<label for="travelers">Travelers:</label>
-					<input type='text' class='input traveler-input' placeholder='how many people are going?' name='travelers' required>
+					<input type='text' aria-label="traveler-quantity-input" class='input traveler-input' placeholder='how many people are going?' name='travelers' required>
 				</section>
 				<section class='btn-container'>
-					<button type="submit" class='form-btn clear-form'>Clear Form</button>
-					<button type="submit" class='form-btn btn-warning'>Submit Request</button>
+					<button type="submit" aria-label="submit-request" class='form-btn clear-form'>Clear Form</button>
+					<button type="submit" aria-label="clear-input-fields" class='form-btn btn-warning'>Submit Request</button>
 				</section>
 			</form>
 			<section class='estimated-cost'></section>
