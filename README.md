@@ -37,7 +37,9 @@ In both cases, use the password `travel2020`.
 <img width="955" alt="Screen Shot 2020-06-09 at 8 39 07 PM" src="https://user-images.githubusercontent.com/59381432/84221230-f83dc900-aa91-11ea-8228-f8b04d9afddd.png">
 <img width="982" alt="Screen Shot 2020-06-09 at 8 39 37 PM" src="https://user-images.githubusercontent.com/59381432/84221234-fc69e680-aa91-11ea-9419-b15bfc084ec4.png">
 <img width="918" alt="Screen Shot 2020-06-09 at 8 47 44 PM" src="https://user-images.githubusercontent.com/59381432/84221455-83b75a00-aa92-11ea-9ae2-fdeac49b8617.png">
-<iframe src="https://giphy.com/embed/XH9yYXirDEzb4syVgt" width="480" height="366" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/XH9yYXirDEzb4syVgt">via GIPHY</a></p>
+
+![2020-06-09 20 41 30](https://user-images.githubusercontent.com/59381432/84221879-72228200-aa93-11ea-9e68-2d2e4e1189d1.gif)
+
 
 ### Wins
 - Finishing all application functionality with a relatively clean, organized code base.
