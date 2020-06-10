@@ -40,6 +40,7 @@ In both cases, use the password `travel2020`.
 
 ![2020-06-09 20 41 30](https://user-images.githubusercontent.com/59381432/84221879-72228200-aa93-11ea-9e68-2d2e4e1189d1.gif)
 
+![2020-06-09 20 39 49](https://user-images.githubusercontent.com/59381432/84221922-89616f80-aa93-11ea-9708-7b2546636900.gif)
 
 ### Wins
 - Finishing all application functionality with a relatively clean, organized code base.
