@@ -1,14 +1,15 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-color: #E67E22;
-$accent-yellow: #DAF7A6;
-$accent-blue: #7FB3D5;
-;
+@import 'variables';
+@import 'travelerDash';
+@import 'header';
+@import 'agentDash';
+@import 'login';
+@import 'mediaQuery';
+@import 'tripCard';
 
 body {
 	background: white;
 	font-family: "Quicksand", sans-serif;
 	color: white;
-
 }
 
 header {
@@ -44,28 +45,6 @@ button {
 	}
 }
 
-h1 {
-	display: flex;
-	align-items: flex-end;
-	font-family: "Sulphur Point", sans-serif;
-	font-size: 35px;
-}
-
-.header-map-icon {
-	height: 5vh;
-	margin-left: 5px;
-}
-
-.nav-btn {
-	margin-left: 10px;
-	border: 0;
-}
-
-button img {
-	height: 3vh;
-
-}
-
 .hide {
 	display: none!important;
 }
@@ -73,96 +52,10 @@ button img {
 .background-img {
 	position: absolute;
 	z-index: 1;
-	// opacity: 80%;
 	align-self: flex-end;
 	width: 100%;
 	height: 47%;
 	object-fit: cover;
-}
-
-.login-wrapper {
-	display: flex;
-  justify-content: center;
-  width: 100vw;
-  height: 90vh;
-	.login {
-		border: 2px solid $accent-yellow;
-		background-color: $accent-blue;
-		border-radius: 9px;
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		justify-content: center;
-		max-width: 70%;
-		height: 400px;
-		margin-top: 80px;
-		position: relative;
-		z-index: 2;
-		.login-error {
-			color: red;
-		}
-	}
-}
-
-.login-container {
-	padding: 30px;
-	width: 100%;
-	display: grid;
-	grid-gap: 10px;
-	justify-content: center;
-}
-
-.form-input {
-	display: grid;
-	grid-template-columns: 1fr 4fr;
-	align-items: center;
-	grid-gap: 15px;
-	margin-top: 20px;
-}
-
-.login-btn {
-	margin: 2% 45% 2% 45%;
-}
-
-input {
-	height: 30px;
-	padding: 0;
-	border: 1px grey solid;
-	padding-left: 5px;
-}
-
-.search {
-	display: flex;
-	border: 2px outset $accent-yellow;
-	border-radius: 8px 8px 8px 8px;
-}
-
-#search-input {
-	width: 250px;
-	border-radius: 7px;
-}
-
-.traveler-dash {
-	display: grid;
-	width: 100vw;
-  grid-template-rows: 1fr 3fr 3fr 3fr 3fr;
-	.welcome-banner, .yr-trip-cost {
-		display: flex;
-		justify-content: center;
-		color: $accent-blue;
-		margin-bottom: 0;
-	}
-}
-
-.agent-dash {
-	display: grid;
-	grid-template-rows: 1fr 2fr 2fr;
-	width: 100vw;
-	height: 80vh;
-	margin-top: 2%;
-	p {
-		font-weight: normal;
-	}
 }
 
 .modal {
@@ -175,110 +68,6 @@ input {
 	padding: 15px;
 }
 
-.income-gained {
-	height: 15vh;
-	max-width: 30%;
-}
-
-.trip-card {
-	background-color: $primary-color;
-	border: 2px solid $accent-yellow;
-	border-radius: 7px;
-	cursor: pointer;
-	color: white;
-	min-height: 150px;
-	max-height: 240px;
-	margin: 5px 11px;
-  padding: 0 13px;
-	width: 195px;
-	min-width: 195px;
-	opacity: 88%;
-	font-weight: normal;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	h3 {
-		margin-bottom: 3px;
-	}
-	h4 {
-		font-weight: normal;
-	}
-	&:hover .card-photo {
-		opacity: 50%;
-		transition: .8s ease;
-	}
-	&:hover .text {
-		font-size: 20px;
-    opacity: 100%;
-    transition: .5s ease;
-    width: 100%;
-	}
-	&:hover h3 {
-    text-shadow: 0px 0px 4px $accent-yellow;
-    transition: .8s ease;
-  }
-}
-
-.admin-trip-card {
-	background-color: #E67E22;
-	border: 2px solid #DAF7A6;
-	border-radius: 7px;
-	cursor: pointer;
-	height: 250px;
-	margin: 5px 11px;
-	padding: 0 13px;
-	width: 195px;
-	min-width: 195px;
-	opacity: 88%;
-	font-weight: normal;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	h4 {
-		font-size: 14px;
-	}
-}
-
-.card-photo {
-	position: relative;
-	z-index: 5;
-}
-
-.text {
-	background: $accent-yellow;
-	opacity: 80%;
-	color: black;
-	font-weight: 700;
-	font-size: 0px;
-	opacity: 0%;
-	padding: 0%;
-	position: absolute;
-	z-index: 10;
-	text-align: center;
-	width: 0%;
-	transition: .5s ease;
-}
-
-.card-photo-container {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	position: relative;
-}
-
-.card-photo {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: cover;
-	border-radius: 7px;
-	position: relative;
-	z-index: 5;
-	cursor: pointer;
-	height: 117px;
-	transition: .8s ease;
-	width: 100%;
-}
-
 .trip-container {
 	display: flex;
   flex-wrap: nowrap;
@@ -287,184 +76,6 @@ input {
 	min-height: 150px;
 }
 
-.user-trips-container {
-	display: flex;
-  flex-wrap: nowrap;
-	overflow-x: auto;
-	overflow-y: hidden;
-	height: 261px;
-	color: $accent-blue;
-}
-
-.post-to-trips {
-	color: $accent-blue;
-	align-items: center;
-	background: white;
-	border: 3px solid $primary-color;
-	border-radius: 10px;
-	box-shadow: 1px 1px 115px black;
-	flex-direction: column;
-	height: 37%;
-	width: 36%;
-	margin: 0;
-	overflow-x: scroll;
-	padding: 5%;
-	top: 15%;
-	position: fixed;
-	z-index: 20;
-}
-
 h3 {
 	text-align: center;
-}
-
-.bootstrap-iso {
-	width: 70vw!important;
-}
-
-.col-sm-10.col-sm-offset-2 {
-	text-align: center;
-	padding-right: 80px;
- }
-
- #exit-form-btn {
-  background: white;
-  border: 2px double $primary-color;
-  border-radius: 5px;
-  color: $accent-blue;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 700;
-	margin: -8% -10% 9% -7%;
-	width: 30px;  position: fixed;
-  transition: .3s ease;
-  &:hover {
-    background: $accent-yellow;
-    transition: .3s ease;
-  }
-}
-
-#exit-btn {
-	background: white;
-  border: 2px double $primary-color;
-  border-radius: 5px;
-  color: $accent-blue;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 700;
-	margin: -4% 11% -1% -3%;
-	width: 30px;  position: fixed;
-  transition: .3s ease;
-  &:hover {
-    background: $accent-yellow;
-    transition: .3s ease;
-  }
-}
-
-.btn-container {
-	display: flex;
-  justify-content: space-evenly;
-	.form-btn {
-		margin-top: 25px;
-		height: 36px;
-		width: 91px;
-	}
-}
-
-.trip-information {
-	background: white;
-	border: 3px solid $primary-color;
-	border-radius: 10px;
-	box-shadow: 1px 1px 115px black;
-	height: 54%;
-	width: 64%;
-	margin: 0;
-	overflow-x: scroll;
-	padding: 1% 1% 1% 1%;
-	position: fixed;
-	right: 15%;
-	top: 22%;
-	opacity: 95%;
-	z-index: 20;
-		h3 {
-			text-align: center;
-			height: 44%;
-			background-repeat: no-repeat;
-			background-size: cover;
-			margin: 0;
-			border-radius: 7px 7px 0px 0px;
-			font-size: 30px;
-			text-shadow: 0px 0px 6px black;
-		}
-		h4 {
-			color: $accent-blue;
-		}
-		p {
-			color: black;
-		}
-}
-
-#overlay {
-  filter:alpha(opacity=50);
-  background-color: grey;
-  height: 100%;
-  left: 0;
-  opacity: 0.5;
-  position:fixed;
-  top: 0;
-  width: 100%;
-  z-index: 19;
-}
-
-.drp-calendar {
-	color: black;
-}
-
-.card-bottom {
-	display: grid;
-	grid-template-columns: 3fr 1fr;
-	grid-template-areas:
-			"time btn1"
-			"time btn2";
-	h4 {
-		grid-area: time;
-	}
-	.approve-btn {
-		background-color: $accent-blue;
-		grid-area: btn1;
-		width: 66px;
-		margin-top: 4px
-	}
-	.deny-btn {
-		background-color: $accent-blue;
-		grid-area: btn2;
-		width: 66px;
-		margin-bottom: 7px;
-	}
-	.delete-btn {
-		background-color: $accent-blue;
-		grid-area: btn2;
-		width: 66px;
-		margin-bottom: 7px;
-	} 
-}
-
-.searched-user-container {
-	color: white;
-	height: 340px;
-	h3, h4 {
-		margin: 0;
-		text-align: center;
-	}
-	h4 {
-		font-weight: normal;
-	}
-}
-
-.back-btn {
-	margin: 5px;
-}
-
-.no-result {
-	color: $accent-blue;
 }

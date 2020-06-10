@@ -3,8 +3,10 @@ import { expect } from 'chai';
 import Traveler from '../src/traveler';
 import User from '../src/user';
 import destinations from './destinations-data';
+import trips from './trips';
 
 describe('Traveler', () => {
+	console.log(trips);
 	let user;
 	let felice = {
 		"id": 19,
@@ -12,66 +14,9 @@ describe('Traveler', () => {
 		"travelerType": "thrill-seeker"
 	};
 	let today;
-	let trips;
 
 	beforeEach(() => {
 		today = '2019/12/22';
-		trips = [{
-			"id": 14,
-			"userID": 19,
-			"destinationID": 35,
-			"travelers": 1,
-			"date": "2020/09/24",
-			"duration": 10,
-			"status": "approved",
-			"suggestedActivities": []
-			}, {
-			"id": 16,
-			"userID": 19,
-			"destinationID": 27,
-			"travelers": 1,
-			"date": "2019/11/20",
-			"duration": 9,
-			"status": "approved",
-			"suggestedActivities": []
-			}, {
-			"id": 62,
-			"userID": 19,
-			"destinationID": 37,
-			"travelers": 4,
-			"date": "2020/08/07",
-			"duration": 8,
-			"status": "approved",
-			"suggestedActivities": []
-			}, {
-			"id": 125,
-			"userID": 19,
-			"destinationID": 2,
-			"travelers": 4,
-			"date": "2019/12/22",
-			"duration": 15,
-			"status": "approved",
-			"suggestedActivities": []
-			},
-			{
-			"id": 124,
-			"userID": 46,
-			"destinationID": 3,
-			"travelers": 6,
-			"date": "2019/10/07",
-			"duration": 16,
-			"status": "approved",
-			"suggestedActivities": []
-			}, {
-			"id": 150,
-			"userID": 19,
-			"destinationID": 37,
-			"travelers": 2,
-			"date": "2020/09/15",
-			"duration": 8,
-			"status": "pending",
-			"suggestedActivities": []
-		}]
 		user = new Traveler(felice, 'traveler19', 'travel2020', trips);
 	})
 
@@ -100,7 +45,7 @@ describe('Traveler', () => {
 	})
 
 	it('should hold all trips matching the users id', () => {
-		expect(user.trips).to.deep.equal([trips[0], trips[1], trips[2], trips[3], trips[5]]);
+		expect(user.trips).to.deep.equal([trips[1], trips[2], trips[5], trips[6]]);
 	})
 
 	it('if instantiated while missing an argument, an error should throw', () => {
@@ -125,9 +70,9 @@ describe('Traveler', () => {
 	})
 
 	it('should be able to find all upcoming trips based on todays date', () => {
-		user.findUpcomingTrips('2020/08/08');
+		user.findUpcomingTrips('2019/12/18');
 
-		expect(user.upcomingTrips).to.deep.equal([trips[0]]);
+		expect(user.upcomingTrips).to.deep.equal([trips[2], trips[6]]);
 	})
 
 	it('if findUpcomingTrips method is invoked without an argument, it will return nothing', () => {
@@ -137,9 +82,10 @@ describe('Traveler', () => {
 	})
 
 	it('should be able to find all past trips based on todays date', () => {
-		user.findPastTrips('2020/08/08');
+		user.findActiveTrips('2020/01/19')
+		user.findPastTrips('2020/01/19');
 
-		expect(user.pastTrips).to.deep.equal([trips[1], trips[2], trips[3]]);
+		expect(user.pastTrips).to.deep.equal([trips[1], trips[6]]);
 	})
 
 	it('if findPastTrips method is invoked without an argument, it will return nothing', () => {
@@ -161,7 +107,7 @@ describe('Traveler', () => {
 	})
 
 	it('should be able to find the years trip expenses based off the date', () => {
-		expect(user.findYearTripCost('2020/09/24', destinations)).to.equal('$22660');
+		expect(user.findYearTripCost('2020/09/24', destinations)).to.equal('$10340');
 	})
 
 	it('if findYearTripCost method is invoked while missing an argument, an error should throw', () => {
