@@ -16,6 +16,10 @@ An agent can view all user trips. Their landing page display the company's calen
 - Create a robust test suite that thoroughly tests all functionality of a client-side application
 
 ## Setup
+Check out the deployed site - https://b-stein.github.io/travel-tracker/
+
+-- OR --
+
 Clone down this repository to your local machine.
 
 Once cloned, change into this repo's directy.
