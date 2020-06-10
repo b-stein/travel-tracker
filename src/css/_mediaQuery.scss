@@ -1,0 +1,43 @@
+
+@media only screen and (max-width: 700px) {
+	.login-wrapper .login {
+		width: 85%;
+		max-width: 95vw;
+	}
+	header {
+		h1 {
+			font-size: 3vh;
+		}
+		.header-map-icon {
+			height: 5vh;
+			margin-left: 1px;
+			margin-right: 20px;
+		}
+		.today {
+			display: none;
+		}
+		#search-input {
+			width: 50vw;
+		}
+		.nav-btn {
+			margin-left: 0;
+			width: 40px;
+		}
+	}
+	.trip-information {
+		width: 87%;
+		right: 2%;
+		left: 10%;
+		margin: -7% 15% -1% -5%;
+	}
+	#exit-btn {
+		margin: -7% 11% -1% -4%;
+	}
+	.post-to-trips {
+		width: 78%;
+		top: 18%;
+		#exit-form-btn {
+			margin: -11% -11% 9% -8%;
+		}
+	}
+}

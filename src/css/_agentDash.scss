@@ -1,0 +1,69 @@
+.nav-btn {
+	margin-left: 10px;
+	border: 0;
+}
+
+button img {
+	height: 3vh;
+
+}
+
+.income-gained {
+	height: 15vh;
+	max-width: 30%;
+}
+
+.search {
+	display: flex;
+	border: 2px outset $accent-yellow;
+	border-radius: 8px 8px 8px 8px;
+}
+
+#search-input {
+	width: 250px;
+	border-radius: 7px;
+}
+
+.agent-dash {
+	display: grid;
+	grid-template-rows: 1fr 2fr 2fr;
+	width: 100vw;
+	height: 80vh;
+	margin-top: 2%;
+	p {
+		font-weight: normal;
+	}
+}
+
+.admin-trip-card {
+	background-color: #E67E22;
+	border: 2px solid #DAF7A6;
+	border-radius: 7px;
+	cursor: pointer;
+	height: 250px;
+	margin: 5px 11px;
+	padding: 0 13px;
+	width: 195px;
+	min-width: 195px;
+	opacity: 88%;
+	font-weight: normal;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	h4 {
+		font-size: 14px;
+	}
+}
+
+.user-trips-container {
+	display: flex;
+  flex-wrap: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+	height: 261px;
+	color: $accent-blue;
+}
+
+.drp-calendar {
+	color: black;
+}
